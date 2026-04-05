@@ -103,7 +103,7 @@ Broader Domain Thinking (Excerpts from  [Miro Board](https://miro.com/app/board/
 - [Assumptions Map](docs/images/assumptions_map.png)
 - [Assumption Tests](docs/images/assumption_tests.png)
 
-MVP Requirements:
+MVP Documents:
 
 - [PRD](docs/PRD.md)
 - [User Stories](docs/User_Stories.md)
