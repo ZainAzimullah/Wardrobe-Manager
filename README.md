@@ -93,7 +93,7 @@ Link will be added after deployment.
 ## Product Documentation
 This repository includes the full product development documentation.
 
-Broader Domain Thinking (Images from  [Miro Board](https://miro.com/app/board/uXjVGnSRt2Y=/?share_link_id=981380198776)):
+Broader Domain Thinking (Excerpts from  [Miro Board](https://miro.com/app/board/uXjVGnSRt2Y=/?share_link_id=981380198776)):
 
 - [Miro Board](https://miro.com/app/board/uXjVGnSRt2Y=/?share_link_id=981380198776)
 - [Opportunity-Solution Tree](docs/images/opportunity-solution-tree.png)
