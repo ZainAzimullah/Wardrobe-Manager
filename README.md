@@ -98,8 +98,12 @@ This repository includes the full product development documentation:
 - [Screen Structure](docs/Screens.md)
 - [Database Schema](docs/DB_Schema.md)
 - [Tech Stack](docs/Tech_Stack.md)
+- [Opportunity-Solution Tree](docs/images/opportunity-solution-tree.png)
+- [Metrics Tree](docs/images/metrics_tree.png)
+- [Story Map](docs/images/story_map.png)
+- [Assumptions Map](docs/images/assumptions_map.png)
 
-These documents show the process from idea → MVP → build.
+These documents and diagrams show the process from idea → MVP → build.
 
 ---
 
