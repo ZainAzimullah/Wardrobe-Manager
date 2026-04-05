@@ -96,7 +96,9 @@ This repository includes the full product development documentation.
 Broader Domain Thinking (Excerpts from  [Miro Board](https://miro.com/app/board/uXjVGnSRt2Y=/?share_link_id=981380198776)):
 
 - [Opportunity-Solution Tree](docs/images/opportunity-solution-tree.png)
+- [Jobs-To-Be-Done](docs/images/jobs-to-be-done.png)
 - [Metrics Tree](docs/images/metrics_tree.png)
+- [MVP Success Metrics](docs/images/mvp_success_metrics.png)
 - [Story Map](docs/images/story_map.png)
 - [Assumptions Map](docs/images/assumptions_map.png)
 - [Assumption Tests](docs/images/assumption_tests.png)
