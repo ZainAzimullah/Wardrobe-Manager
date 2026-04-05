@@ -93,12 +93,14 @@ Link will be added after deployment.
 ## Product Documentation
 This repository includes the full product development documentation.
 
-Broader Domain Thinking:
+Broader Domain Thinking (Images from  [Miro Board](https://miro.com/app/board/uXjVGnSRt2Y=/?share_link_id=981380198776)):
 
+- [Miro Board](https://miro.com/app/board/uXjVGnSRt2Y=/?share_link_id=981380198776)
 - [Opportunity-Solution Tree](docs/images/opportunity-solution-tree.png)
 - [Metrics Tree](docs/images/metrics_tree.png)
 - [Story Map](docs/images/story_map.png)
 - [Assumptions Map](docs/images/assumptions_map.png)
+- [Assumption Tests](docs/images/assumption_tests.png)
 
 MVP Requirements:
 
@@ -109,7 +111,7 @@ MVP Requirements:
 - [Tech Stack](docs/Tech_Stack.md)
 
 
-These documents and diagrams show the process from idea → MVP → build.
+These materials show the process from idea → MVP → build.
 
 ---
 
