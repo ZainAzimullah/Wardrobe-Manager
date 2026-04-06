@@ -4,7 +4,7 @@
 
 ---
 
-## 1. Purpose
+## Purpose
 
 This document defines the requirements for the Wardrobe Outfit Planner MVP. The goal is to validate a single hypothesis: users will add their clothes to an app and create saved outfits to reduce the effort of deciding what to wear.
 
@@ -12,13 +12,35 @@ Everything in this document is scoped to that validation. Features not listed he
 
 ---
 
-## 2. Problem Statement
+## Product Outcome and Success Metrics
+
+This MVP is designed to support the product’s core outcome:
+
+**North Star Metric:** Outfits planned per Weekly Active User
+
+This metric represents the core value of the product: helping users decide what to wear by planning outfits.
+
+The MVP specifically aims to improve the following product metrics:
+
+- **Activation:** % of users who create their first outfit
+- **Engagement:** Number of outfits created per Weekly Active User
+- **Retention:** % of users who create an outfit at least once in week 4
+
+The features included in this PRD are scoped to support the core behaviour loop:
+
+**Add clothes → Create outfit → Save outfit → Reuse outfit**
+
+If users complete this loop repeatedly, the product is delivering value. The MVP focuses on validating this behaviour before investing in more advanced features such as recommendations, automation, or integrations.
+
+---
+
+## Problem Statement
 
 Deciding what to wear is a daily source of decision fatigue, particularly for busy professionals. Users know what clothes they own but struggle to visualise combinations and often forget which outfits had worked well in the past.
 
 ---
 
-## 3. Target User
+## Target User
 
 Professionals who:
 
@@ -28,7 +50,7 @@ Professionals who:
 
 ---
 
-## 4. Core Loop
+## Core Loop
 
 The MVP supports one loop and one loop only:
 
@@ -38,9 +60,9 @@ Every feature decision should be evaluated against this loop. If a feature does 
 
 ---
 
-## 5. Features
+## Features
 
-### 5.1 Add a Clothing Item
+### Add a Clothing Item
 
 Users can add individual items of clothing to their wardrobe.
 
@@ -64,7 +86,7 @@ Users can add individual items of clothing to their wardrobe.
 
 ---
 
-### 5.2 View Wardrobe
+### View Wardrobe
 
 Users can browse all clothing items they have added.
 
@@ -82,7 +104,7 @@ Users can browse all clothing items they have added.
 
 ---
 
-### 5.3 Create an Outfit
+### Create an Outfit
 
 Users can combine one Top and one Bottom to form an outfit.
 
@@ -102,7 +124,7 @@ Users can combine one Top and one Bottom to form an outfit.
 
 ---
 
-### 5.4 View Saved Outfits
+### View Saved Outfits
 
 Users can browse all outfits they have previously saved.
 
@@ -120,7 +142,7 @@ Users can browse all outfits they have previously saved.
 
 ---
 
-### 5.5 Reuse a Saved Outfit
+### Reuse a Saved Outfit
 
 Users can quickly view a saved outfit and act on it.
 
@@ -137,7 +159,7 @@ Users can quickly view a saved outfit and act on it.
 
 ---
 
-## 6. Out of Scope (MVP)
+## Out of Scope (MVP)
 
 The following are explicitly excluded and may be considered post-validation:
 
@@ -156,7 +178,7 @@ The following are explicitly excluded and may be considered post-validation:
 
 ---
 
-## 7. Technical Requirements
+## Technical Requirements
 
 | Requirement | Decision |
 |---|---|
@@ -169,7 +191,7 @@ The following are explicitly excluded and may be considered post-validation:
 
 ---
 
-## 8. UX Principles
+## UX Principles
 
 **Speed over features**
 The interface must allow a user to add their first item within 60 seconds of landing on the app, and create their first outfit within 3 minutes.
@@ -185,7 +207,7 @@ Colour swatches, clear labels, and obvious actions. No hidden gestures or ambigu
 
 ---
 
-## 9. Success Metrics
+## Success Metrics
 
 Validation targets for the MVP. If the majority are not met after user testing, the product hypothesis should be revisited before further development.
 
@@ -200,7 +222,7 @@ Validation targets for the MVP. If the majority are not met after user testing, 
 
 ---
 
-## 10. Open Questions
+## Open Questions
 
 - **1.** Colour input — Predefined list vs. free text: which leads to faster item entry?
 - **2.** Outfit naming — Should users be required to name outfits, or is auto-naming sufficient to keep friction low?
@@ -209,7 +231,7 @@ Validation targets for the MVP. If the majority are not met after user testing, 
 
 ---
 
-## 11. Launch Criteria
+## Launch Criteria
 
 The MVP is ready to ship for user testing when all of the following are true:
 
