@@ -173,7 +173,7 @@ If the MVP validates the hypothesis, potential future features include:
 
 ---
 
-## Link to Mixpanel Analytics Board
+## Link to Mixpanel Analytics Board (WIP)
 https://mixpanel.com/public/Uov6yepNKB8NezEeNTYcZb
 
 ---
