@@ -93,6 +93,35 @@ These metrics are designed to validate the core behaviour before investing in mo
 
 ---
 
+## Product Development Process
+
+This project was built to demonstrate an end-to-end product development process, from problem definition through to a working MVP.
+
+The process followed a typical product development lifecycle:
+
+| Stage | Task | Tool |
+|------|------|------|
+| Discovery | Opportunity-Solution Tree | ChatGPT, Miro |
+| Discovery | Jobs-To-Be-Done | ChatGPT, Miro |
+| Discovery | Story Map & MVP Scope | ChatGPT, Miro |
+| Discovery | Success Metrics | ChatGPT, Miro |
+| Discovery | Assumptions Mapping | ChatGPT, Miro |
+| Definition | PRD Structure | ChatGPT |
+| Definition | PRD | Claude |
+| Definition | User Stories & Acceptance Criteria | Claude |
+| Definition | Screen Structure | Claude |
+| Definition | Database Schema | Claude |
+| Definition | Tech Stack | Claude |
+| Build | MVP Scaffold | Claude Code |
+| Build | MVP Refinement | Cursor |
+| Testing | Usability Testing | ChatGPT + Manual Testing |
+| Deployment | Deployment (Vercel) | Claude Code |
+| Future | Roadmap Planning | ChatGPT |
+
+This workflow demonstrates how AI tools can be used across discovery, planning, and implementation to accelerate product development while still following a structured product process.
+
+---
+
 ## Tech Stack
 
 | Layer | Technology |
