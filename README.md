@@ -144,7 +144,7 @@ The app uses **localStorage** instead of a backend to keep the MVP lightweight a
 ---
 
 ## Live App
-Link will be added after deployment.
+https://wardrobe-manager-xi.vercel.app/
 
 ---
 
