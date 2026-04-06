@@ -14,7 +14,7 @@ Everything in this document is scoped to that validation. Features not listed he
 
 ## 2. Problem Statement
 
-Deciding what to wear is a daily source of decision fatigue, particularly for busy professionals. Users know what clothes they own but struggle to visualise combinations and often forget items exist. There is no lightweight, focused tool that helps them plan and reuse outfits without complexity.
+Deciding what to wear is a daily source of decision fatigue, particularly for busy professionals. Users know what clothes they own but struggle to visualise combinations and often forget which outfits had worked well in the past.
 
 ---
 

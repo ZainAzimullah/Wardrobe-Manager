@@ -10,12 +10,7 @@ The focus of this project was to demonstrate an **end-to-end product development
 ---
 
 ## Problem
-Deciding what to wear is a small but frequent source of decision fatigue. Many people own clothes that work well together, but:
-- They forget which combinations work
-- They repeatedly spend time choosing outfits
-- They default to the same outfits even when they own other options
-
-There is no lightweight tool focused specifically on **saving and reusing outfits** from clothes users already own.
+Deciding what to wear is a daily source of decision fatigue, particularly for busy professionals. Users know what clothes they own but struggle to visualise combinations and often forget which outfits had worked well in the past.
 
 ---
 
