@@ -14,7 +14,7 @@ This project was built as a **Minimum Viable Product (MVP)** to validate a behav
 ---
 
 ## Live App
-https://wardrobe-manager-xi.vercel.app/
+https://wardrobe-manager-tau.vercel.app/
 
 ---
 
