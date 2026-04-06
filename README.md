@@ -153,8 +153,8 @@ This repository includes the full product development documentation, showing the
 
 Product Thinking (Excerpts from  [Miro Board](https://miro.com/app/board/uXjVGnSRt2Y=/?share_link_id=981380198776)):
 
-- [Opportunity-Solution Tree](docs/images/opportunity-solution-tree.png)
-- [Jobs-To-Be-Done](docs/images/jobs-to-be-done.png)
+- [Opportunity-Solution Tree](docs/images/opportunity_solution_tree.png)
+- [Jobs-To-Be-Done](docs/images/jobs_to_be_done.png)
 - [Metrics Tree](docs/images/metrics_tree.png)
 - [MVP Success Metrics](docs/images/mvp_success_metrics.png)
 - [Story Map](docs/images/story_map.png)
