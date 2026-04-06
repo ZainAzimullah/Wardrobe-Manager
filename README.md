@@ -13,6 +13,46 @@ This project was built as a **Minimum Viable Product (MVP)** to validate a behav
 
 ---
 
+## Live App
+https://wardrobe-manager-xi.vercel.app/
+
+---
+
+## Product Development Process
+
+AI-Assisted Workflow:
+
+```mermaid
+flowchart LR
+    Discovery --> Definition --> Build --> Test --> Deploy --> Future
+
+    Discovery[Discovery<br>ChatGPT + Miro]
+    Definition[Definition<br>Claude]
+    Build[Build<br>Claude Code + Cursor]
+    Test[Test<br>ChatGPT + Manual]
+    Deploy[Deploy<br>Vercel]
+```
+
+Discovery (Screenshots from  [Miro Board](https://miro.com/app/board/uXjVGnSRt2Y=/?share_link_id=981380198776)):
+
+- [Opportunity-Solution Tree](docs/images/opportunity_solution_tree.png)
+- [Jobs-To-Be-Done](docs/images/jobs_to_be_done.png)
+- [Story Map & MVP Scope](docs/images/story_map.png)
+- [Metrics Tree](docs/images/metrics_tree.png)
+- [MVP Success Metrics](docs/images/mvp_success_metrics.png)
+- [Assumptions Map](docs/images/assumptions_map.png)
+- [Assumption Tests](docs/images/assumption_tests.png)
+
+Definition:
+
+- [PRD](docs/PRD.md)
+- [User Stories](docs/User_Stories.md)
+- [Screen Structure](docs/Screens.md)
+- [Database Schema](docs/DB_Schema.md)
+- [Tech Stack](docs/Tech_Stack.md)
+
+---
+
 ## Problem
 Deciding what to wear is a daily source of decision fatigue, particularly for busy professionals. Users know what clothes they own but struggle to visualise combinations, forget outfits that worked well in the past, and spend unnecessary time deciding what to wear each day.
 
@@ -99,35 +139,6 @@ These metrics are designed to validate the core behaviour before investing in mo
 
 ---
 
-## Product Development Process
-
-This project was built to demonstrate an end-to-end product development process, from problem definition through to a working MVP.
-
-The process followed a typical product development lifecycle:
-
-| Stage | Task | Tool |
-|------|------|------|
-| Discovery | Opportunity-Solution Tree | ChatGPT, Miro |
-| Discovery | Jobs-To-Be-Done | ChatGPT, Miro |
-| Discovery | Story Map & MVP Scope | ChatGPT, Miro |
-| Discovery | Success Metrics | ChatGPT, Miro |
-| Discovery | Assumptions Mapping | ChatGPT, Miro |
-| Definition | PRD Structure | ChatGPT |
-| Definition | PRD | Claude |
-| Definition | User Stories & Acceptance Criteria | Claude |
-| Definition | Screen Structure | Claude |
-| Definition | Database Schema | Claude |
-| Definition | Tech Stack | Claude |
-| Build | MVP Scaffold | Claude Code |
-| Build | MVP Refinement | Cursor |
-| Testing | Usability Testing | ChatGPT + Manual Testing |
-| Deployment | Deployment (Vercel) | Claude Code |
-| Future | Roadmap Planning | ChatGPT |
-
-This workflow demonstrates how AI tools can be used across discovery, planning, and implementation to accelerate product development while still following a structured product process.
-
----
-
 ## Tech Stack
 
 | Layer | Technology |
@@ -140,52 +151,6 @@ This workflow demonstrates how AI tools can be used across discovery, planning, 
 | Analytics | Mixpanel |
 
 The app uses **localStorage** instead of a backend to keep the MVP lightweight and fast to build.
-
----
-
-## Live App
-https://wardrobe-manager-xi.vercel.app/
-
----
-
-## Product Documentation
-This repository includes the full product development documentation, showing the process from idea → MVP → build.
-
-Product Thinking (Excerpts from  [Miro Board](https://miro.com/app/board/uXjVGnSRt2Y=/?share_link_id=981380198776)):
-
-- [Opportunity-Solution Tree](docs/images/opportunity_solution_tree.png)
-- [Jobs-To-Be-Done](docs/images/jobs_to_be_done.png)
-- [Metrics Tree](docs/images/metrics_tree.png)
-- [MVP Success Metrics](docs/images/mvp_success_metrics.png)
-- [Story Map](docs/images/story_map.png)
-- [Assumptions Map](docs/images/assumptions_map.png)
-- [Assumption Tests](docs/images/assumption_tests.png)
-
-Product Development:
-
-- [PRD](docs/PRD.md)
-- [User Stories](docs/User_Stories.md)
-- [Screen Structure](docs/Screens.md)
-- [Database Schema](docs/DB_Schema.md)
-- [Tech Stack](docs/Tech_Stack.md)
-
----
-
-## What This Project Demonstrates
-This project demonstrates an end-to-end product development process:
-
-- Defining business and product outcomes
-- Defining a north star metric
-- Opportunity mapping
-- Problem definition
-- Hypothesis-driven product development
-- MVP scoping and prioritisation
-- Writing a Product Requirements Document (PRD)
-- Creating user stories and acceptance criteria
-- Designing user flows and screen structure
-- Designing a data model
-- Selecting a tech stack
-- Building and deploying a working MVP
 
 ---
 
@@ -205,3 +170,44 @@ If the MVP validates the hypothesis, potential future features include:
 
 ## Project Status
 **Status:** In development (MVP)
+
+---
+
+## Local Development
+
+### Prerequisites
+- [Node.js](https://nodejs.org/) v18 or higher
+- npm (bundled with Node.js)
+
+### Setup
+
+1. Clone the repository
+   ```bash
+   git clone https://github.com/zainazimullah/wardrobe-manager.git
+   cd wardrobe-manager
+   ```
+
+2. Install dependencies
+   ```bash
+   npm install
+   ```
+
+3. Configure environment variables
+   ```bash
+   cp .env.example .env
+   ```
+   Open `.env` and replace `your_token_here` with your [Mixpanel project token](https://mixpanel.com). Analytics events will be silently skipped if this is left blank.
+
+4. Start the development server
+   ```bash
+   npm run dev
+   ```
+   The app will be available at `http://localhost:5173`.
+
+### Other commands
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start local dev server with hot reload |
+| `npm run build` | Build for production (outputs to `dist/`) |
+| `npm run preview` | Serve the production build locally |
