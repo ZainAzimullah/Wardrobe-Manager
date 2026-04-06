@@ -24,7 +24,7 @@ AI-Assisted Workflow:
 
 ```mermaid
 flowchart LR
-    Discovery --> Definition --> Build --> Test --> Deploy --> Future
+    Discovery --> Definition --> Build --> Test --> Deploy
 
     Discovery[Discovery<br>ChatGPT + Miro]
     Definition[Definition<br>Claude]
