@@ -169,7 +169,12 @@ If the MVP validates the hypothesis, potential future features include:
 ---
 
 ## Project Status
-**Status:** In development (MVP)
+**Status:** Shipped (MVP)
+
+---
+
+## Link to Mixpanel Analytics Board
+https://mixpanel.com/public/Uov6yepNKB8NezEeNTYcZb
 
 ---
 
