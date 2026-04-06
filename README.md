@@ -3,30 +3,56 @@
 ## Overview
 Wardrobe Manager is a mobile-first web application designed to help users reduce decision fatigue when choosing what to wear by allowing them to create and reuse outfits from clothes they already own.
 
-This project was built as a **Minimum Viable Product (MVP)** to validate a behavioural hypothesis rather than to build a full-featured wardrobe platform.
-
-The focus of this project was to demonstrate an **end-to-end product development process**, from problem definition through to a working prototype.
+This project was built as a **Minimum Viable Product (MVP)** to validate a behavioural hypothesis and demonstrate an end-to-end product development process, from problem definition through to a working prototype.
 
 ---
 
 ## Problem
-Deciding what to wear is a daily source of decision fatigue, particularly for busy professionals. Users know what clothes they own but struggle to visualise combinations and often forget which outfits had worked well in the past.
+Deciding what to wear is a daily source of decision fatigue, particularly for busy professionals. Users know what clothes they own but struggle to visualise combinations, forget outfits that worked well in the past, and spend unnecessary time deciding what to wear each day.
+
+This product explores whether a simple wardrobe and outfit planning tool can reduce the effort required to decide what to wear.
+
+---
+
+## Target User
+The target user for this MVP is a working professional who:
+
+- Owns a moderate wardrobe
+- Wants to look put-together
+- Does not want to spend much time deciding what to wear
+- Is comfortable using a simple mobile web app as part of a daily routine
+
+---
+
+## Business Outcome
+The long-term business goal for this product is **conversion to paid users** through a freemium model.
+
+---
+
+## Product Outcome (North Star Metric)
+**North Star Metric: Outfits planned per Weekly Active User**
+
+This metric was chosen because it represents the core value of the product: helping users decide what to wear by planning outfits.
+
+If users repeatedly plan outfits, the product is delivering value. If the product delivers value, users are more likely to return and eventually convert to paid users.
+
+---
+
+## Product Strategy
+To drive the North Star metric, the product focuses on enabling and reinforcing a single core behaviour loop:
+
+**Add clothes → Create outfit → Save outfit → Reuse outfit**
+
+Each step in this loop reinforces repeat usage and reduces the effort required to decide what to wear in the future. Increasing the frequency of this loop directly drives the North Star metric (Outfits planned per Weekly Active User).
+
+The MVP was intentionally scoped to support this loop and exclude features that do not directly support this behaviour.
 
 ---
 
 ## Hypothesis
-**If users can create and save outfits from clothes they already own, they will reduce the time and effort required to decide what to wear.**
+**If users can create and save outfits from clothes they already own, they will reduce the time and effort required to decide what to wear and will return to reuse saved outfits.**
 
 This MVP was built to test that hypothesis.
-
----
-
-## Core Loop
-The entire MVP is built around a single core loop:
-
-**Add clothes → Create outfit → Save outfit → Reuse outfit**
-
-Every feature in the MVP supports this loop. Features that do not support this loop were intentionally excluded.
 
 ---
 
@@ -63,6 +89,8 @@ The MVP will be considered successful if the following targets are met during te
 - ≥ 70% of users say the app helps them decide what to wear
 - ≥ 70% of users say they would use the app again
 
+These metrics are designed to validate the core behaviour before investing in more advanced features.
+
 ---
 
 ## Tech Stack
@@ -86,9 +114,9 @@ Link will be added after deployment.
 ---
 
 ## Product Documentation
-This repository includes the full product development documentation.
+This repository includes the full product development documentation, showing the process from idea → MVP → build.
 
-Broader Domain Thinking (Excerpts from  [Miro Board](https://miro.com/app/board/uXjVGnSRt2Y=/?share_link_id=981380198776)):
+Product Thinking (Excerpts from  [Miro Board](https://miro.com/app/board/uXjVGnSRt2Y=/?share_link_id=981380198776)):
 
 - [Opportunity-Solution Tree](docs/images/opportunity-solution-tree.png)
 - [Jobs-To-Be-Done](docs/images/jobs-to-be-done.png)
@@ -98,7 +126,7 @@ Broader Domain Thinking (Excerpts from  [Miro Board](https://miro.com/app/board/
 - [Assumptions Map](docs/images/assumptions_map.png)
 - [Assumption Tests](docs/images/assumption_tests.png)
 
-MVP Documents:
+Product Development:
 
 - [PRD](docs/PRD.md)
 - [User Stories](docs/User_Stories.md)
@@ -106,14 +134,14 @@ MVP Documents:
 - [Database Schema](docs/DB_Schema.md)
 - [Tech Stack](docs/Tech_Stack.md)
 
-
-These materials show the process from idea → MVP → build.
-
 ---
 
 ## What This Project Demonstrates
 This project demonstrates an end-to-end product development process:
 
+- Defining business and product outcomes
+- Defining a north star metric
+- Opportunity mapping
 - Problem definition
 - Hypothesis-driven product development
 - MVP scoping and prioritisation
