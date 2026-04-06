@@ -1,74 +1,155 @@
-Product: Wardrobe Outfit Planner MVP
+# CLAUDE.md — Wardrobe Outfit Planner (MVP)
 
-Product Goal:
-Help users decide what to wear by allowing them to add clothes and create outfits by combining tops and bottoms.
+## Project Overview
+This is a mobile-first web app that helps users reduce decision fatigue when deciding what to wear by allowing them to create and reuse outfits from clothes they already own.
 
-Core User Problem:
-Users struggle to decide what to wear and which clothes go well together.
+This project is a Minimum Viable Product (MVP) designed to validate a behavioural hypothesis, not to be a fully featured production app.
 
-Target User:
-Young professionals or students who want to look put-together but find outfit planning mentally effortful.
+Core hypothesis:
+If users can create and save outfits from clothes they already own, they will reduce the effort required to decide what to wear and will return to reuse saved outfits.
 
-Core Loop:
+---
+
+## Core Behaviour Loop
+The entire product is built around one loop:
+
 Add clothes → Create outfit → Save outfit → Reuse outfit
 
-MVP Features Only:
+When making product or engineering decisions, prioritise anything that makes this loop faster, easier, or more likely to repeat.
 
-Add clothing item (name, type, colour)
-View wardrobe items
-Create outfit by selecting a top and bottom
-Save outfit
-View saved outfits
-Reuse saved outfit
+If a feature does not support this loop, it does not belong in the MVP.
 
-Do NOT build yet (Future Features):
+---
 
-AI recommendations
-Weather suggestions
-Event-based outfits
-Camera auto-add
-Bulk upload
-Social features
-Shopping
-Calendar
-Notifications
+## North Star Metric
+Outfits planned per Weekly Active User.
 
-Success Metrics:
+This represents the core value of the product: helping users decide what to wear by planning outfits.
 
-≥70% users add ≥5 items
-≥60% create ≥1 outfit
-Time to create first outfit < 3 minutes
-Avg outfits per user ≥ 2
-≥70% say it helps them decide what to wear
-≥70% say they would use again
+The MVP should focus on increasing:
+- Activation — % of users who create their first outfit
+- Engagement — Outfits created per Weekly Active User
+- Retention — % of users who create an outfit at least once in week 4
 
-Platform:
-Start with a simple web app (mobile responsive). Do not build native app yet.
+---
 
-Goal of MVP:
-Validate that users will add clothes and create outfits to help decide what to wear.
+## MVP Scope
+The MVP includes only the following functionality:
 
-Customer Journey:
+- Add clothing items (name, type, colour)
+- View wardrobe items
+- Create an outfit (1 top + 1 bottom)
+- Save outfits
+- View saved outfits
+- Reuse a saved outfit
 
-The product fits into the user’s real-life journey of deciding what to wear. The app is primarily used during the planning and decision-making stage, not while the user is actually wearing the outfit.
+Out of scope for MVP:
+- AI outfit recommendations
+- Weather suggestions
+- Photo uploads
+- Social features
+- Shopping integrations
+- User accounts
+- Cloud sync
+- Edit/delete items
+- Edit/delete outfits
 
-Customer Journey Stages:
+Do not add these unless explicitly asked.
 
-Own Clothes (Before App Use)
-The user already owns clothes in their wardrobe but does not have a structured way to plan outfits. They may forget what items they own or struggle to visualise combinations.
-Decide What to Wear (Problem Stage)
-The user is trying to decide what to wear for work, an event, or a social occasion. This is mentally effortful because they are unsure which clothes go well together.
-Plan Outfit (Using the App)
-The user opens the app to plan an outfit by selecting and combining tops and bottoms. The app helps reduce decision fatigue by making it easier to visualise and assemble outfits.
-Save Outfit (After Decision)
-If the user likes an outfit they created, they save it so they can reuse it in the future instead of repeating the decision process.
-Reuse Outfit (Future Use)
-In the future, when the user needs an outfit again, they can quickly browse and reuse a saved outfit, reducing decision time and effort.
+---
 
-Key Insight:
-The product is a decision-support and planning tool. Its primary value is reducing decision fatigue and helping users feel confident in what they wear. The product becomes more valuable over time as users add more clothes and save more outfits, making future outfit decisions faster and easier.
+## Technical Constraints
+- Frontend: React (Vite)
+- Styling: Tailwind CSS
+- State: React useState + useContext
+- Storage: localStorage only
+- No backend
+- No authentication
+- Mobile-first design
+- Hosted on Vercel
 
-Core Product Loop:
-Add clothes → Create outfit → Save outfit → Reuse outfit → Repeat
+Keep the architecture simple. This is an MVP, not a scalable production system.
 
-The MVP should focus on supporting this core loop.
+---
+
+## Data Model
+There are only two entities:
+
+ClothingItem:
+- id
+- name
+- type (top | bottom)
+- colour
+- createdAt
+
+Outfit:
+- id
+- name
+- topId
+- bottomId
+- createdAt
+
+An outfit always consists of exactly one top and one bottom.
+
+---
+
+## UX Principles
+- Speed over features
+- Mobile-first
+- No dead ends (every empty state tells the user what to do)
+- Clear labels and obvious actions
+- A new user should be able to create their first outfit in under 3 minutes
+
+---
+
+## Key Screens
+1. Home
+2. Wardrobe List
+3. Add Item
+4. Item Detail
+5. Create Outfit
+6. Item Picker
+7. Saved Outfits List
+8. Outfit Detail
+
+Each screen should be implemented as a separate React component.
+
+---
+
+## Analytics Events
+Instrument the following Mixpanel events:
+
+- item_added
+- outfit_created
+- outfit_viewed
+- outfit_worn
+- wardrobe_opened
+- empty_state_seen
+- add_item_cta_tapped
+
+These events are used to measure activation, engagement, and retention.
+
+---
+
+## Coding Guidelines
+- Use functional React components
+- Use a WardrobeContext for shared state
+- Store all data in localStorage
+- Keep components small and focused
+- Prefer simple solutions over complex ones
+- Do not introduce Redux, databases, or authentication for MVP
+- The goal is speed and clarity, not perfection
+
+---
+
+## When Helping With This Project
+When generating code, Claude should:
+- Follow the PRD and User Stories strictly
+- Respect MVP scope
+- Build screen-by-screen
+- Use simple React patterns
+- Keep styling minimal and mobile-friendly
+- Ensure data persists in localStorage
+- Ensure navigation matches the screen flow
+
+Claude should act as a senior engineer helping build an MVP quickly and correctly.
