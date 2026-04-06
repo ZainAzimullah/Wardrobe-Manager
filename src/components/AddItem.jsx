@@ -5,7 +5,7 @@ import { generateId } from '../utils/ids'
 import { COLOURS } from '../utils/colours'
 
 export default function AddItem({ navigate }) {
-  const { addItem } = useWardrobe()
+  const { addClothingItem } = useWardrobe()
   const [name, setName] = useState('')
   const [type, setType] = useState('top')
   const [colour, setColour] = useState('White')
@@ -25,7 +25,7 @@ export default function AddItem({ navigate }) {
       createdAt: new Date().toISOString(),
     }
 
-    addItem(item)
+    addClothingItem(item)
     track('item_added', { type, colour })
     navigate('wardrobe')
   }

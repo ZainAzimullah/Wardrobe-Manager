@@ -3,8 +3,8 @@ import { useWardrobe } from '../context/WardrobeContext'
 import { track } from '../utils/analytics'
 
 export default function HomeScreen({ navigate }) {
-  const { items, outfits } = useWardrobe()
-  const isEmpty = items.length === 0
+  const { clothingItems, outfits } = useWardrobe()
+  const isEmpty = clothingItems.length === 0
 
   useEffect(() => {
     if (isEmpty) track('empty_state_seen', { screen: 'home' })
@@ -42,7 +42,7 @@ export default function HomeScreen({ navigate }) {
           <div>
             <p className="font-semibold text-gray-900">My Wardrobe</p>
             <p className="text-sm text-gray-500 mt-0.5">
-              {items.length} {items.length === 1 ? 'item' : 'items'}
+              {clothingItems.length} {clothingItems.length === 1 ? 'item' : 'items'}
             </p>
           </div>
           <span className="text-gray-400 text-xl">›</span>

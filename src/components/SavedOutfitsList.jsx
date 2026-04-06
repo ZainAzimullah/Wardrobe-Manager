@@ -4,7 +4,7 @@ import { track } from '../utils/analytics'
 import { colourStyle } from '../utils/colours'
 
 export default function SavedOutfitsList({ navigate }) {
-  const { outfits, items } = useWardrobe()
+  const { outfits, clothingItems } = useWardrobe()
   const isEmpty = outfits.length === 0
 
   useEffect(() => {
@@ -12,7 +12,7 @@ export default function SavedOutfitsList({ navigate }) {
   }, [isEmpty])
 
   function getItem(id) {
-    return items.find((i) => i.id === id)
+    return clothingItems.find((i) => i.id === id)
   }
 
   return (

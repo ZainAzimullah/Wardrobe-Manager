@@ -4,8 +4,8 @@ import { track } from '../utils/analytics'
 import { colourStyle } from '../utils/colours'
 
 export default function WardrobeList({ navigate }) {
-  const { tops, bottoms, items } = useWardrobe()
-  const isEmpty = items.length === 0
+  const { tops, bottoms, clothingItems } = useWardrobe()
+  const isEmpty = clothingItems.length === 0
 
   useEffect(() => {
     if (isEmpty) track('empty_state_seen', { screen: 'wardrobe' })

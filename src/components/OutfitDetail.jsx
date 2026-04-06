@@ -4,12 +4,13 @@ import { track } from '../utils/analytics'
 import { colourStyle } from '../utils/colours'
 
 export default function OutfitDetail({ navigate, params }) {
-  const { outfits, items } = useWardrobe()
+  const { getOutfitWithItems } = useWardrobe()
   const [worn, setWorn] = useState(false)
 
-  const outfit = outfits.find((o) => o.id === params.outfitId)
-  const top = outfit ? items.find((i) => i.id === outfit.topId) : null
-  const bottom = outfit ? items.find((i) => i.id === outfit.bottomId) : null
+  const resolved = getOutfitWithItems(params.outfitId)
+  const outfit = resolved
+  const top = resolved?.top ?? null
+  const bottom = resolved?.bottom ?? null
 
   if (!outfit) {
     return (

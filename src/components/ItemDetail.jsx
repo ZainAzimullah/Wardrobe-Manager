@@ -2,8 +2,8 @@ import { useWardrobe } from '../context/WardrobeContext'
 import { colourStyle } from '../utils/colours'
 
 export default function ItemDetail({ navigate, params }) {
-  const { items } = useWardrobe()
-  const item = items.find((i) => i.id === params.itemId)
+  const { clothingItems } = useWardrobe()
+  const item = clothingItems.find((i) => i.id === params.itemId)
 
   if (!item) {
     return (
