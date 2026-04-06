@@ -7,6 +7,12 @@ This project was built as a **Minimum Viable Product (MVP)** to validate a behav
 
 ---
 
+## Prototype Preview
+
+![Image](docs/images/prototype_preview.png)
+
+---
+
 ## Problem
 Deciding what to wear is a daily source of decision fatigue, particularly for busy professionals. Users know what clothes they own but struggle to visualise combinations, forget outfits that worked well in the past, and spend unnecessary time deciding what to wear each day.
 
