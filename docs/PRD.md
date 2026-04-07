@@ -6,7 +6,9 @@
 
 ## Purpose
 
-This document defines the requirements for the Wardrobe Outfit Planner MVP. The goal is to validate a single hypothesis: users will add their clothes to an app and create saved outfits to reduce the effort of deciding what to wear.
+This document defines the requirements for the Wardrobe Outfit Planner MVP. The goal is to validate this hypothesis:
+
+*If users can easily add their clothes and combine them to create outfits, they will reduce the time and effort required to decide what to wear. If this is true, users will save outfits and return to reuse them or create more.*
 
 Everything in this document is scoped to that validation. Features not listed here are explicitly out of scope.
 

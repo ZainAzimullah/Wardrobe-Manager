@@ -96,9 +96,9 @@ The MVP was intentionally scoped to support this loop and exclude features that 
 ---
 
 ## Hypothesis
-**If users can create and save outfits from clothes they already own, they will reduce the time and effort required to decide what to wear and will return to reuse saved outfits.**
+*If users can easily add their clothes and combine them to create outfits, they will reduce the time and effort required to decide what to wear. If this is true, users will save outfits and return to reuse them or create more.*
 
-This MVP was built to test that hypothesis.
+This MVP was built to test this hypothesis.
 
 ---
 
