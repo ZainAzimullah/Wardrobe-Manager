@@ -24,7 +24,7 @@ The MVP specifically aims to improve the following product metrics:
 
 - **Activation:** % of users who create their first outfit
 - **Engagement:** Number of outfits created per Weekly Active User
-- **Retention:** % of users who create an outfit at least once in week 4
+- **Retention:** % of users who create or reuse an outfit at least once in week 4
 
 The features included in this PRD are scoped to support the core behaviour loop:
 
