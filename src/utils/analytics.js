@@ -15,6 +15,9 @@ function getOrCreateUserId() {
 if (TOKEN) {
   mixpanel.init(TOKEN, { track_pageview: false, persistence: 'localStorage' })
   mixpanel.identify(getOrCreateUserId())
+  if (localStorage.getItem('__developer') === 'true') {
+    mixpanel.register({ developer: true })
+  }
 }
 
 export function track(event, props = {}) {
