@@ -54,7 +54,7 @@ Definition:
 ---
 
 ## Problem
-Deciding what to wear is a daily source of decision fatigue, particularly for busy professionals. Users know what clothes they own but struggle to visualise combinations, forget outfits that worked well in the past, and spend unnecessary time deciding what to wear each day.
+Deciding what to wear is a daily source of decision fatigue, particularly for busy professionals. Users struggle to visualise combinations, forget outfits that worked well in the past, and spend unnecessary time deciding what to wear each day.
 
 This product explores whether a simple wardrobe and outfit planning tool can reduce the effort required to decide what to wear.
 
