@@ -14,7 +14,8 @@ This project was built as a **Minimum Viable Product (MVP)** to validate a behav
 ---
 
 ## Live App
-TBC
+Prod: TBC
+Dev: TBC
 
 ---
 
@@ -173,8 +174,9 @@ If the MVP validates the hypothesis, potential future features include:
 
 ---
 
-## Link to Mixpanel Analytics Board (WIP)
-https://mixpanel.com/public/Uov6yepNKB8NezEeNTYcZb
+## Link to Mixpanel Analytics Board
+Prod: TBC
+Dev: TBC
 
 ---
 
