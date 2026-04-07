@@ -174,8 +174,7 @@ If the MVP validates the hypothesis, potential future features include:
 ---
 
 ## Link to Mixpanel Analytics Board
-Prod: TBC
-Dev: TBC
+TODO
 
 ---
 
