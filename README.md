@@ -159,6 +159,14 @@ The app uses **localStorage** instead of a backend to keep the MVP lightweight a
 
 ---
 
+## User Testing
+
+- [User Test Plan](./docs/User_Test.md)
+- [Survey](https://forms.gle/sfTz5pUTqtgJSzbY8)
+- Insights & Iterations (TODO)
+
+---
+
 ## Reflection & Key Learnings
 
 Building this MVP showed how AI tools change how products get built, while reinforcing what still requires deliberate product thinking.
