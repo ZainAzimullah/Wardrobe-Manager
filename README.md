@@ -128,7 +128,7 @@ These features may be explored after validating the core behaviour.
 ## Success Metrics
 The MVP will be considered successful if the following targets are met during testing:
 
-- ≥ 70% of users add 5 or more clothing items
+- ≥ 70% of users add 2 or more clothing items
 - ≥ 60% of users create at least one outfit
 - Time to first outfit created < 3 minutes
 - Average saved outfits per user ≥ 2

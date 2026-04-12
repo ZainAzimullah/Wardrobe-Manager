@@ -217,7 +217,7 @@ Validation targets for the MVP. If the majority are not met after user testing, 
 
 | Metric | Target |
 |---|---|
-| Users who add 5 or more clothing items | ≥70% |
+| Users who add 2 or more clothing items | ≥70% |
 | Users who create 1 or more outfits | ≥60% |
 | Time to first outfit created | < 3 minutes |
 | Average saved outfits per user | ≥2 |
