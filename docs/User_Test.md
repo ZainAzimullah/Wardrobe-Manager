@@ -9,8 +9,6 @@ This should take 5-10 minutes.
 
 ## 1. Access the App
 
-Please use your phone if possible:
-
 https://wardrobe-manager-eight.vercel.app/
 
 ---
