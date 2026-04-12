@@ -139,6 +139,11 @@ These metrics are designed to validate the core behaviour before investing in mo
 
 ---
 
+## Analytics (Mixpanel)
+https://mixpanel.com/p/PNCeGJf582SguPVnKLKaow
+
+---
+
 ## Tech Stack
 
 | Layer | Technology |
@@ -151,6 +156,32 @@ These metrics are designed to validate the core behaviour before investing in mo
 | Analytics | Mixpanel |
 
 The app uses **localStorage** instead of a backend to keep the MVP lightweight and fast to build.
+
+---
+
+## Reflection & Key Learnings
+
+Building this MVP showed how AI tools change how products get built, while reinforcing what still requires deliberate product thinking.
+
+**Speed of execution changed how I approached scoping**  
+Because I could go from idea to a working app quickly, I was more disciplined about scoping the MVP around the core behaviour loop: add clothes → create outfit → save → reuse. Rather than exploring multiple directions, I focused on validating a single hypothesis end to end with a real product.
+
+**Upfront structure directly impacted build quality**  
+Providing Claude Code with clear inputs such as the PRD, user stories, screen structure, database schema, and tech stack made a clear difference. When inputs were specific, the output aligned with the intended user journey. When they were vague, it introduced unnecessary features or decisions that didn’t fit the MVP.
+
+**I chose to validate with a real product, not a prototype**  
+For this problem, building the actual app using localStorage and a simple UI was as fast as creating a high fidelity prototype, and gave more realistic validation. This worked because the core risk was behavioural, whether users would create and reuse outfits, not pixel level UX.
+
+**AI accelerated the build, but not the thinking**  
+The hardest part was still defining the problem, choosing the right opportunity such as focusing on decision fatigue and outfit reuse, and aligning on a clear success metric like outfits planned per WAU. AI helped execute quickly, but direction still required judgement.
+
+**Different tools played distinct roles in the workflow**  
+Claude Code was most effective for architecting the app and scaffolding the initial implementation. Cursor was more useful for iterative refinement such as improving flows and making targeted changes. ChatGPT was strongest in the early stages for framing the problem and structuring artefacts.
+
+**End to end ownership improved clarity and speed**  
+Taking this from problem definition to MVP to live deployment tightened feedback loops and made trade offs more explicit, such as using localStorage instead of a backend and limiting outfits to one top and one bottom. This helped keep the focus on validating the core behaviour.
+
+> As execution becomes increasingly commoditised, the quality of problem framing, prioritisation, and judgement becomes the primary driver of product impact.
 
 ---
 
@@ -170,11 +201,6 @@ If the MVP validates the hypothesis, potential future features include:
 
 ## Project Status
 **Status:** Shipped (MVP)
-
----
-
-## Link to Mixpanel Analytics Board
-https://mixpanel.com/p/PNCeGJf582SguPVnKLKaow
 
 ---
 
