@@ -51,6 +51,13 @@ Definition:
 - [Database Schema](docs/DB_Schema.md)
 - [Tech Stack](docs/Tech_Stack.md)
 
+Measurement:
+
+- [User Test Instructions](./docs/User_Test.md)
+- [Survey](https://forms.gle/sfTz5pUTqtgJSzbY8)
+- [Analytics (Mixpanel)](https://mixpanel.com/p/PNCeGJf582SguPVnKLKaow)
+- Insights & Iterations (WIP)
+
 ---
 
 ## Problem
@@ -139,11 +146,6 @@ These metrics are designed to validate the core behaviour before investing in mo
 
 ---
 
-## Analytics (Mixpanel)
-https://mixpanel.com/p/PNCeGJf582SguPVnKLKaow
-
----
-
 ## Tech Stack
 
 | Layer | Technology |
@@ -156,14 +158,6 @@ https://mixpanel.com/p/PNCeGJf582SguPVnKLKaow
 | Analytics | Mixpanel |
 
 The app uses **localStorage** instead of a backend to keep the MVP lightweight and fast to build.
-
----
-
-## User Testing
-
-- [User Test Plan](./docs/User_Test.md)
-- [Survey](https://forms.gle/sfTz5pUTqtgJSzbY8)
-- Insights & Iterations (TODO)
 
 ---
 
