@@ -34,7 +34,7 @@ Explore the app in a way that feels natural to you. You can stop at any time.
 If you’re unsure where to start, you might:
 
 * Add some clothes you own
-* Try putting together an outfit
+* Try putting together outfits
 * Look through anything that seems relevant
 
 The goal is to understand how you choose to use the app, not to complete specific steps.
