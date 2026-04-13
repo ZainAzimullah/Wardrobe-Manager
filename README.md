@@ -161,7 +161,7 @@ The app uses **localStorage** instead of a backend to keep the MVP lightweight a
 
 ---
 
-## User Test Results - Executive Summary
+## User Test Findings - Executive Summary
 
 ![MVP User Research Summary](docs/images/hero.png)
 
@@ -173,7 +173,15 @@ Two issues need fixing before wider rollout.
 
 **"Wear this" is broken by ambiguity.** Five of six users didn't understand what happened after tapping it. They expected a visible, persistent outcome — a badge, a confirmed state. Without one, there's no observable loop closure and no reason to return. This is the highest-priority fix.
 
+> *"After clicking 'Wear this' I tried a few more times, and went back to the main page. Didn't end up figuring out what to do next or what this action means."*
+
 **Photos are a functional gap, not a nice-to-have.** Four of six participants flagged it independently. Users can't reliably recall garments from text names alone, which limits how much the app actually reduces decision effort — and likely explains the 3.0/5 helpfulness score despite strong funnel performance.
+
+> *"It would make it so much easier to scan your options and quickly find one you like instead of reading just text, especially for visual learners."*
+
+On the positive side, the core loop landed exactly as intended:
+
+> *"The app was very intuitive — I didn't need any instructions to understand what I needed to do."*
 
 | Metric | Result | Target |
 |---|---|---|
