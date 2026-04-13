@@ -6,9 +6,11 @@
 
 ## Methodology
 
-Six participants tested the app on 12–13 April 2026. The survey combined open-ended qualitative questions with a single 5-point Likert scale item measuring how much the app helped them decide what to wear. Mixpanel analytics data from the same 24-hour window supplements the survey findings.
+Six participants tested the app on 12–13 April 2026 and completed a survey. The survey combined open-ended qualitative questions with a single 5-point Likert scale item measuring how much the app helped them decide what to wear. Mixpanel analytics data from four participants over the same 24-hour window supplements the survey findings. Two sessions were not captured in analytics due to instrumentation limitations, so behavioural insights are based on the subset of tracked users.
 
-![Mixpanel Dashboard](images/analytics.png)
+- [Survey](https://forms.gle/sfTz5pUTqtgJSzbY8)
+- [Responses](Survey_Responses.csv)
+- [Analytics (Mixpanel)](https://mixpanel.com/p/PNCeGJf582SguPVnKLKaow)
 
 ---
 
