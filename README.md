@@ -161,6 +161,36 @@ The app uses **localStorage** instead of a backend to keep the MVP lightweight a
 
 ---
 
+## User Test Results - Executive Summary
+
+![MVP User Research Summary](docs/images/hero.png)
+
+> **6 participants · 12–13 April 2026 · Mobile web · Auckland**
+
+The first round of user testing validated the core hypothesis. Every instrumented user completed the full loop without instruction, average outfit creation time was **57 seconds** (target: under 3 minutes), and the Mixpanel funnel showed zero drop-off across all four steps.
+
+Two issues need fixing before wider rollout.
+
+**"Wear this" is broken by ambiguity.** Five of six users didn't understand what happened after tapping it. They expected a visible, persistent outcome — a badge, a confirmed state. Without one, there's no observable loop closure and no reason to return. This is the highest-priority fix.
+
+**Photos are a functional gap, not a nice-to-have.** Four of six participants flagged it independently. Users can't reliably recall garments from text names alone, which limits how much the app actually reduces decision effort — and likely explains the 3.0/5 helpfulness score despite strong funnel performance.
+
+| Metric | Result | Target |
+|---|---|---|
+| Users adding 2+ items | 4/4 (100%) | ≥70% |
+| Users creating at least one outfit | 4/4 (100%) | ≥60% |
+| Avg. outfit creation time | 57 seconds | Under 3 min |
+| Outfits per Weekly Active User | 2.5 | ≥2 |
+| Avg. helpfulness (Likert) | avg 3.0 / 5 | ≥70% vote ≥3/5 |
+
+**Next steps:** Add a visible confirmation state to "Wear this" immediately. Ship photo upload in v2. The core loop is proven — the path to a 4+ helpfulness score runs through these two fixes.
+
+---
+
+*Full report and analytics in [`/docs/Findings_and_Recommendations.md`](docs/Findings_and_Recommendations.md).*
+
+---
+
 ## Reflection & Key Learnings
 
 Building this MVP showed how AI tools change how products get built, while reinforcing what still requires deliberate product thinking.
