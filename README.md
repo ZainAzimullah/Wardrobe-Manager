@@ -56,7 +56,7 @@ Measurement:
 - [User Test Instructions](./docs/User_Test.md)
 - [Survey](https://forms.gle/sfTz5pUTqtgJSzbY8)
 - [Analytics (Mixpanel)](https://mixpanel.com/p/PNCeGJf582SguPVnKLKaow)
-- Insights & Iterations (WIP)
+- [Findings & Recommendations](docs/Findings_and_Recommendations.md)
 
 ---
 
