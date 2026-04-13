@@ -222,7 +222,6 @@ Validation targets for the MVP. If the majority are not met after user testing, 
 | Time to first outfit created | < 3 minutes |
 | Average saved outfits per user | ≥2 |
 | Users who say the app helps them decide what to wear | ≥70% |
-| Users who say they would use the app again | ≥70% |
 
 ---
 

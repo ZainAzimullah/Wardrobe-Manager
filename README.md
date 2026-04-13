@@ -140,7 +140,6 @@ The MVP will be considered successful if the following targets are met during te
 - Time to first outfit created < 3 minutes
 - Average saved outfits per user ≥ 2
 - ≥ 70% of users say the app helps them decide what to wear
-- ≥ 70% of users say they would use the app again
 
 These metrics are designed to validate the core behaviour before investing in more advanced features.
 
