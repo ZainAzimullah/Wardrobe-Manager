@@ -22,16 +22,7 @@ https://wardrobe-manager-eight.vercel.app/
 
 AI-Assisted Workflow:
 
-```mermaid
-flowchart LR
-    Discovery --> Definition --> Build --> Test --> Deploy
-
-    Discovery[Discovery<br>ChatGPT + Miro]
-    Definition[Definition<br>Claude]
-    Build[Build<br>Claude Code + Cursor]
-    Test[Test<br>ChatGPT + Manual]
-    Deploy[Deploy<br>Vercel]
-```
+![Build Process](docs/images/build-process.png)
 
 Discovery (Screenshots from  [Miro Board](https://miro.com/app/board/uXjVGnSRt2Y=/?share_link_id=981380198776)):
 
