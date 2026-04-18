@@ -18,13 +18,13 @@ Six participants tested the app on 12–13 April 2026 and completed a survey. Th
 
 ![Key metrics summary](images/chart_metrics.png)
 
-| Metric | Result | Target |
-|---|---|---|
-| Users adding 2+ items | 4/4 (100%) | ≥70% |
-| Users creating at least one outfit | 4/4 (100%) | ≥60% |
-| Avg. outfit creation time | 57 seconds | Under 3 min |
-| Outfits per Weekly Active User | 2.5 | ≥2 |
-| Avg. helpfulness (Likert) | avg 3.0 / 5 | ≥70% vote ≥3/5 |
+| Metric | Result | Target | Met? |
+|---|---|---|---|
+| Users adding 2+ items | 4/4 (100%) | ≥ 70% | ✓ |
+| Users creating at least one outfit | 4/4 (100%) | ≥ 60% | ✓ |
+| Avg. outfit creation time | 57 seconds | < 3 min | ✓ |
+| Outfits per Weekly Active User | 2.5 | ≥ 2 | ✓ |
+| Avg. helpfulness (Likert) | 3.0 / 5 | ≥ 70% vote ≥ 3/5 | ✓ |
 
 ---
 

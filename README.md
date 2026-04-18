@@ -118,13 +118,13 @@ The core experience landed as intended:
 
 > *"The app was very intuitive — I didn't need any instructions to understand what I needed to do."*
 
-| Metric | Result | Target |
-|---|---|---|
-| Users adding 2+ items | 4/4 (100%) | ≥ 70% |
-| Users creating at least one outfit | 4/4 (100%) | ≥ 60% |
-| Avg. outfit creation time | 57 seconds | < 3 min |
-| Outfits per Weekly Active User | 2.5 | ≥ 2 |
-| Avg. helpfulness (Likert) | 3.0 / 5 | ≥ 70% vote ≥ 3/5 |
+| Metric | Result | Target | Met? |
+|---|---|---|---|
+| Users adding 2+ items | 4/4 (100%) | ≥ 70% | ✓ |
+| Users creating at least one outfit | 4/4 (100%) | ≥ 60% | ✓ |
+| Avg. outfit creation time | 57 seconds | < 3 min | ✓ |
+| Outfits per Weekly Active User | 2.5 | ≥ 2 | ✓ |
+| Avg. helpfulness (Likert) | 3.0 / 5 | ≥ 70% vote ≥ 3/5 | ✓ |
 
 **Next steps:** fix "Wear this" confirmation state immediately. Ship photo upload in v2. The core loop is proven — the path to a 4+ helpfulness score runs through these two fixes.
 
