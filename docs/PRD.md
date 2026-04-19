@@ -80,7 +80,7 @@ Users can add individual items of clothing to their wardrobe.
 
 - Item appears immediately in the wardrobe view after saving
 - No image upload in MVP — colour and name are sufficient for identification
-- No edit or delete in MVP v1 (can be added post-launch based on feedback)
+- No edit or delete in MVP (can be added post-launch based on feedback)
 
 **Acceptance criteria**
 
