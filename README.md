@@ -44,7 +44,7 @@ A mobile-first web app for reducing outfit decision fatigue — built end-to-end
 
 ## Problem
 
-Busy professionals waste daily time deciding what to wear — struggling to visualise combinations, forgetting outfits that worked, and applying real cognitive effort to a decision that doesn't warrant it.
+Deciding what to wear is a daily source of decision fatigue, particularly for busy professionals. Users struggle to visualise combinations, forget outfits that worked well in the past, and spend unnecessary time deciding what to wear each day.
 
 **Hypothesis:** if users can add their clothes and build outfits, they'll reduce that effort and return to reuse what they've saved.
 
