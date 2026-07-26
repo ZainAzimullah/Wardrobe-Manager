@@ -105,10 +105,20 @@ export function validateResponse(payload, wardrobe) {
 export function classifyProviderError(err) {
   if (!err || typeof err !== 'object') return 'provider_error'
 
-  const name = typeof err.name === 'string' ? err.name.toLowerCase() : ''
+  // Real SDK error instances (e.g. APIConnectionTimeoutError) always report
+  // err.name === 'Error' — the constructor never overrides it. The actual
+  // subclass only survives on err.constructor.name. Checking both keeps this
+  // working for real SDK errors and for the plain { name: '...' } doubles used
+  // in this file's own test suite, without importing the SDK into this module.
+  const label = [
+    typeof err.name === 'string' ? err.name : '',
+    err.constructor && typeof err.constructor.name === 'string' ? err.constructor.name : '',
+  ]
+    .join(' ')
+    .toLowerCase()
   const status = err.status
 
-  if (name.includes('timeout') || err.code === 'ETIMEDOUT' || status === 408 || status === 504) {
+  if (label.includes('timeout') || err.code === 'ETIMEDOUT' || status === 408 || status === 504) {
     return 'timeout'
   }
   if (status === 401 || status === 403) return 'config_error'

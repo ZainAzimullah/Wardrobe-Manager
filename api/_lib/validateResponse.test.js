@@ -1,6 +1,11 @@
 import { describe, it, expect } from 'vitest'
 import { validateResponse, classifyProviderError } from './validateResponse.js'
 import { EXPLANATION_MAX_LENGTH } from './schema.js'
+import {
+  APIConnectionTimeoutError,
+  AuthenticationError,
+  RateLimitError,
+} from '@anthropic-ai/sdk/error.mjs'
 
 // The wardrobe AS SENT — the authority for every identifier check.
 const WARDROBE = [
@@ -160,6 +165,39 @@ describe('validateResponse — evaluation plan invalid-response cases', () => {
     expect(classifyProviderError({ name: 'APIConnectionTimeoutError' })).toBe('timeout')
     expect(classifyProviderError({ code: 'ETIMEDOUT' })).toBe('timeout')
     expect(classifyProviderError({ name: 'APIError', status: 504 })).toBe('timeout')
+  })
+})
+
+// Real @anthropic-ai/sdk error instances all report `.name === 'Error'` — the
+// subclass name only survives on `.constructor.name`. These cases construct
+// the actual SDK classes (not plain-object doubles) so a regression here —
+// e.g. reverting to a name-only check — fails the suite instead of only
+// misbehaving in production.
+describe('validateResponse — classifyProviderError against real SDK error instances', () => {
+  it('maps a real APIConnectionTimeoutError to timeout', () => {
+    const err = new APIConnectionTimeoutError()
+    expect(err.name).toBe('Error') // documents the surprising SDK behaviour this guards against
+    expect(classifyProviderError(err)).toBe('timeout')
+  })
+
+  it('maps a real AuthenticationError to config_error', () => {
+    const err = new AuthenticationError(
+      401,
+      { error: { message: 'bad key' } },
+      'Invalid API key',
+      new Headers(),
+    )
+    expect(classifyProviderError(err)).toBe('config_error')
+  })
+
+  it('maps a real RateLimitError to provider_error', () => {
+    const err = new RateLimitError(
+      429,
+      { error: { message: 'slow down' } },
+      'rate limited',
+      new Headers(),
+    )
+    expect(classifyProviderError(err)).toBe('provider_error')
   })
 })
 

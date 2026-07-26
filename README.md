@@ -185,6 +185,7 @@ Claude Code was strongest for architecture and initial scaffolding. Cursor for i
 ### Prerequisites
 - Node.js v18+
 - npm
+- A [Vercel](https://vercel.com) account (only needed to run the AI recommendation endpoint locally — see below)
 
 ### Setup
 
@@ -192,12 +193,29 @@ Claude Code was strongest for architecture and initial scaffolding. Cursor for i
 git clone https://github.com/zainazimullah/wardrobe-manager.git
 cd wardrobe-manager
 npm install
-cp .env.example .env   # add your Mixpanel token
-npm run dev            # http://localhost:5173
+cp .env.example .env   # add your Mixpanel token and Anthropic API key
+```
+
+There are two ways to run the app locally, depending on what you're working on:
+
+**UI only** — fast, no login required. The AI recommendation screen will error, since Vite doesn't serve `/api`.
+
+```bash
+npm run dev             # http://localhost:5173
+```
+
+**Full app, including AI recommendations** — runs the SPA and the `/api/recommend` serverless function together.
+
+```bash
+npx vercel login        # one-time
+npx vercel link         # one-time, links this folder to a Vercel project
+npx vercel dev --listen 3000   # http://localhost:3000
 ```
 
 | Command | Description |
 |---|---|
-| `npm run dev` | Start dev server with hot reload |
+| `npm run dev` | Start dev server with hot reload (UI only, no `/api`) |
+| `npx vercel dev --listen 3000` | Start dev server + serverless functions (full app) |
 | `npm run build` | Build for production → `dist/` |
 | `npm run preview` | Serve the production build locally |
+| `npm test` | Run the Vitest suite (`api/_lib/**` validation and error-mapping tests) |

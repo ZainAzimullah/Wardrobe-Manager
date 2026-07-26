@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { useWardrobe } from '../context/WardrobeContext'
 import ItemThumb from './ItemThumb'
-import { requestRecommendation, MOCK_STATES } from '../utils/recommendMock'
-import { isDeveloper } from '../utils/devFixture'
+import { requestRecommendation } from '../utils/recommend'
 
 const OCCASION_CHIPS = [
   'Office day',
@@ -69,9 +68,6 @@ export default function RecommendOutfit({ navigate }) {
   const [result, setResult] = useState(null)
   const [errorCode, setErrorCode] = useState(null)
 
-  const [mockState, setMockState] = useState('success')
-  const showDevTools = isDeveloper()
-
   const hasTops = tops.length > 0
   const hasBottoms = bottoms.length > 0
   const wardrobeReady = hasTops && hasBottoms
@@ -91,7 +87,7 @@ export default function RecommendOutfit({ navigate }) {
     if (weather.trim()) request.weather = weather.trim()
     if (preferences.trim()) request.preferences = preferences.trim()
 
-    const response = await requestRecommendation(request, { mockState })
+    const response = await requestRecommendation(request)
 
     if (response.status === 'no_match') {
       setResult(response)
@@ -136,29 +132,6 @@ export default function RecommendOutfit({ navigate }) {
         <h1 className="font-semibold text-gray-900">Suggest an Outfit</h1>
         <div className="w-10" />
       </div>
-
-      {showDevTools && (
-        <div className="mb-6 bg-gray-100 border border-gray-200 rounded-xl p-3">
-          <label
-            htmlFor="mock-state"
-            className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5"
-          >
-            Developer — mock response
-          </label>
-          <select
-            id="mock-state"
-            value={mockState}
-            onChange={(e) => setMockState(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"
-          >
-            {MOCK_STATES.map((s) => (
-              <option key={s} value={s}>
-                {s}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
 
       {!wardrobeReady ? (
         <InsufficientWardrobe hasTops={hasTops} hasBottoms={hasBottoms} navigate={navigate} />

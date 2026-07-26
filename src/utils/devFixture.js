@@ -24,7 +24,7 @@ export async function loadEvaluationWardrobe() {
     // Written through the existing storage helper so the slice 1 quota
     // handling applies here too — a full store fails cleanly.
     return saveClothingItems(items)
-  } catch {
-    return { ok: false, error: 'unknown' }
+  } catch (err) {
+    return { ok: false, error: err instanceof Error ? err.message : 'unknown' }
   }
 }
