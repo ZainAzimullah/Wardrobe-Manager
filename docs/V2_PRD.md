@@ -28,7 +28,7 @@ V2 will:
 2. Introduce a minimal direct photo-upload workflow.
 3. Test whether an AI-generated recommendation grounded in the user’s wardrobe can provide more direct outfit decision support.
 
-See the [V2 Opportunity Brief](./v2-opportunity-brief.md) and [MVP Findings and Recommendations](./Findings_and_Recommendations.md) for the supporting research and opportunity framing.
+See the [V2 Opportunity Brief](./v2_Opportunity_Brief.md) and [MVP Findings and Recommendations](./Findings_and_Recommendations.md) for the supporting research and opportunity framing.
 
 ---
 
