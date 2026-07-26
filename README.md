@@ -160,7 +160,9 @@ Claude Code was strongest for architecture and initial scaffolding. Cursor for i
 - Edit and delete items
 - Multi-item outfits (jackets, shoes, accessories)
 - Outfit tagging (work, casual, formal)
-- Weather-based suggestions · Calendar integration · AI recommendations
+- Weather-based suggestions
+- Calendar integration
+- AI recommendations
 - User accounts and cloud sync
 
 ---
