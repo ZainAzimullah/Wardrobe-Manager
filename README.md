@@ -132,6 +132,57 @@ The core experience landed as intended:
 
 ---
 
+## V2 — AI Outfit Recommendations
+
+V2 extends Wardrobe Manager from a tool for manually creating and saving outfits into a context-aware decision-support experience.
+
+The iteration responds to two findings from MVP testing:
+
+- Five of six participants were unclear about what happened after selecting **“Wear this”**
+- Four of six participants independently requested clothing photos to make garments easier to recognise
+
+V2 addresses those evidenced gaps while testing a new hypothesis:
+
+> Can a context-aware recommendation grounded in the user’s saved wardrobe reduce the effort required to decide what to wear?
+
+### What has been built
+
+- A persistent **“Wear this”** state with visible confirmation and last-worn date
+- Direct clothing photo selection, client-side resizing and local storage
+- Optional garment details such as material, warmth and formality
+- An AI recommendation flow using occasion, optional weather and user preferences
+- Structured model output containing one saved top ID and one saved bottom ID
+- Server-side and client-side validation to prevent unavailable garments from being displayed
+- An explicit no-match state when the wardrobe cannot satisfy the request
+- A secure Vercel serverless endpoint so the Anthropic API key is never exposed in the browser
+
+The model receives structured wardrobe metadata rather than garment photos. Photos help the user recognise their clothing, while excluding images from the model keeps the initial experiment narrower, cheaper and easier to evaluate.
+
+### Current status
+
+The live recommendation flow is working end to end using Claude Sonnet.
+
+The feature has **not yet completed formal evaluation or user testing**, so recommendation quality and improvements in perceived helpfulness remain unproven.
+
+The next steps are to:
+
+1. Connect recommendations to the existing save-outfit flow
+2. Add the planned analytics events
+3. Run the predefined scenario-based evaluation
+4. Conduct a small user evaluation
+5. Document results and any resulting iterations
+
+### V2 documentation
+
+| Document | Description |
+|---|---|
+| [Opportunity Brief](docs/v2-opportunity-brief.md) | Evidence, opportunity, assumptions and product hypothesis |
+| [Product Requirements Document](docs/v2-prd.md) | Scope, requirements, guardrails and success criteria |
+| [Evaluation Plan](docs/v2-evaluation-plan.md) | Test wardrobe, scenarios, hard checks and scoring rubric |
+| [Technical Plan](docs/v2-technical-plan.md) | Architecture, API contract, validation and implementation slices |
+
+---
+
 ## Reflection & Key Learnings
 
 **Speed of execution changed how I approached scoping.**
