@@ -1,0 +1,82 @@
+[
+  {
+    "id": "top_01",
+    "name": "White Oxford shirt",
+    "type": "top",
+    "colour": "White",
+    "details": "Cotton, smart, long-sleeved, suitable for office or dinner",
+    "createdAt": "2026-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "top_02",
+    "name": "Navy merino polo",
+    "type": "top",
+    "colour": "Navy",
+    "details": "Merino wool, warm, smart-casual, refined",
+    "createdAt": "2026-01-01T00:00:01.000Z"
+  },
+  {
+    "id": "top_03",
+    "name": "Grey crew-neck T-shirt",
+    "type": "top",
+    "colour": "Grey",
+    "details": "Cotton, lightweight, casual",
+    "createdAt": "2026-01-01T00:00:02.000Z"
+  },
+  {
+    "id": "top_04",
+    "name": "Beige linen shirt",
+    "type": "top",
+    "colour": "Other",
+    "details": "Linen, beige, breathable, smart-casual, warm-weather",
+    "createdAt": "2026-01-01T00:00:03.000Z"
+  },
+  {
+    "id": "top_05",
+    "name": "Pale blue casual shirt",
+    "type": "top",
+    "colour": "Blue",
+    "details": "Cotton, pale blue, smart-casual, versatile",
+    "createdAt": "2026-01-01T00:00:04.000Z"
+  },
+  {
+    "id": "bottom_01",
+    "name": "Charcoal wool trousers",
+    "type": "bottom",
+    "colour": "Grey",
+    "details": "Wool, charcoal, warm, smart, suitable for office or dinner",
+    "createdAt": "2026-01-01T00:00:05.000Z"
+  },
+  {
+    "id": "bottom_02",
+    "name": "Beige chinos",
+    "type": "bottom",
+    "colour": "Other",
+    "details": "Cotton, beige, smart-casual, versatile",
+    "createdAt": "2026-01-01T00:00:06.000Z"
+  },
+  {
+    "id": "bottom_03",
+    "name": "Dark indigo jeans",
+    "type": "bottom",
+    "colour": "Blue",
+    "details": "Denim, dark indigo, casual",
+    "createdAt": "2026-01-01T00:00:07.000Z"
+  },
+  {
+    "id": "bottom_04",
+    "name": "White linen trousers",
+    "type": "bottom",
+    "colour": "White",
+    "details": "Linen, breathable, warm-weather",
+    "createdAt": "2026-01-01T00:00:08.000Z"
+  },
+  {
+    "id": "bottom_05",
+    "name": "Grey tailored trousers",
+    "type": "bottom",
+    "colour": "Grey",
+    "details": "Wool blend, tailored, smart, moderately warm",
+    "createdAt": "2026-01-01T00:00:09.000Z"
+  }
+]

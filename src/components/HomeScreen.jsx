@@ -1,14 +1,28 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useWardrobe } from '../context/WardrobeContext'
 import { track } from '../utils/analytics'
+import { isDeveloper, loadEvaluationWardrobe } from '../utils/devFixture'
 
 export default function HomeScreen({ navigate }) {
   const { clothingItems, outfits } = useWardrobe()
   const isEmpty = clothingItems.length === 0
+  const showDevTools = isDeveloper()
+  const [fixtureError, setFixtureError] = useState(null)
 
   useEffect(() => {
     if (isEmpty) track('empty_state_seen', { screen: 'home' })
   }, [isEmpty])
+
+  async function handleLoadFixture() {
+    const result = await loadEvaluationWardrobe()
+    if (result.ok) {
+      // The context reads from localStorage on mount, so a reload is the
+      // simplest way to pick up a wholesale wardrobe replacement.
+      window.location.reload()
+    } else {
+      setFixtureError(result.error)
+    }
+  }
 
   return (
     <div className="max-w-md mx-auto px-4 pt-10 pb-8">
@@ -71,7 +85,40 @@ export default function HomeScreen({ navigate }) {
           </div>
           <span className="text-gray-400 text-xl">›</span>
         </button>
+
+        <button
+          onClick={() => navigate('recommend')}
+          className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 text-left flex items-center justify-between"
+        >
+          <div>
+            <p className="font-semibold text-gray-900">Suggest an Outfit</p>
+            <p className="text-sm text-gray-500 mt-0.5">Get a suggestion for an occasion</p>
+          </div>
+          <span className="text-gray-400 text-xl">›</span>
+        </button>
       </div>
+
+      {showDevTools && (
+        <div className="mt-8 bg-gray-100 border border-gray-200 rounded-xl p-3">
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+            Developer
+          </p>
+          <button
+            onClick={handleLoadFixture}
+            className="text-sm font-medium text-gray-900 underline"
+          >
+            Load evaluation wardrobe
+          </button>
+          <p className="text-xs text-gray-500 mt-1.5">
+            Replaces your wardrobe with the fixed 10-item evaluation fixture.
+          </p>
+          {fixtureError && (
+            <p role="alert" className="text-xs text-red-700 mt-2">
+              Couldn’t load the fixture ({fixtureError}).
+            </p>
+          )}
+        </div>
+      )}
     </div>
   )
 }

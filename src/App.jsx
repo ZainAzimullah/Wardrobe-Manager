@@ -8,6 +8,7 @@ import CreateOutfit from './components/CreateOutfit'
 import ItemPicker from './components/ItemPicker'
 import SavedOutfitsList from './components/SavedOutfitsList'
 import OutfitDetail from './components/OutfitDetail'
+import RecommendOutfit from './components/RecommendOutfit'
 
 function Router() {
   const [nav, setNav] = useState({ screen: 'home', params: {} })
@@ -28,6 +29,7 @@ function Router() {
     'item-picker': <ItemPicker navigate={navigate} params={params} />,
     'saved-outfits': <SavedOutfitsList navigate={navigate} />,
     'outfit-detail': <OutfitDetail navigate={navigate} params={params} />,
+    recommend: <RecommendOutfit navigate={navigate} />,
   }
 
   return screens[screen] ?? screens.home
