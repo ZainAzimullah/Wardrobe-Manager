@@ -123,11 +123,13 @@ This is the primary V2 experiment and should receive the majority of the evaluat
 
 The initial recommendation experience will request:
 
-| Input | Requirement | Description |
-|---|---|---|
-| Occasion | Required | The situation the user is dressing for, such as an office day, casual weekend or dinner |
-| Weather context | Optional | Manually supplied conditions such as cold, warm, raining or windy |
-| Preferences or constraints | Optional | Additional natural-language guidance such as “I will be walking a lot” or “avoid suede” |
+| Input | Field | Requirement | Description |
+|---|---|---|---|
+| Occasion | `occasion` | Required | The situation the user is dressing for, such as an office day, casual weekend or dinner |
+| Weather context | `weather` | Optional | Manually supplied conditions such as cold, warm, raining or windy |
+| Preferences or constraints | `preferences` | Optional | Additional natural-language guidance such as “I will be walking a lot” or “avoid suede” |
+
+The optional free-text request field is named `preferences` throughout. It is distinct from `details`, which describes a saved wardrobe item.
 
 Weather will be supplied manually in the first version.
 
@@ -143,7 +145,11 @@ Each item should include, where available:
 - Item name
 - Clothing type or category
 - Colour
-- Existing descriptive metadata
+- `details` — an optional free-text description of the garment
+
+`details` is a new optional wardrobe field introduced in V2. It captures descriptive information the existing model cannot express — material, warmth, fit, formality and specific shade — for example “merino wool, warm, smart-casual”.
+
+It is supplied by the user when adding an item, is never required, and is the only additional garment information sent to the model.
 
 The application should send only information required to produce the recommendation.
 
@@ -237,7 +243,9 @@ The interface should display the date associated with the most recent “Wear th
 
 ### WT-4: Repeat behaviour
 
-If the user marks the same outfit as worn again, the application should update or record the latest state without creating an unclear duplicate interaction.
+If the user marks the same outfit as worn again, the application must overwrite the stored date with the latest one.
+
+V2 records only the most recent wear (`lastWornAt`). A wear count and a full wear history are deliberately out of scope.
 
 ### WT-5: Failure feedback
 
@@ -261,21 +269,25 @@ The initial version will support a maximum of one image per wardrobe item.
 
 ### PU-4: Supported formats
 
-The application must accept common mobile image formats supported by the selected technical implementation.
+The application must accept any still-image format the browser can decode, which covers the common mobile formats.
+
+Selected images are re-encoded as JPEG during processing, so the stored format is normalised regardless of what the user supplied.
 
 ### PU-5: File validation
 
-The application must reject unsupported or excessively large files with a clear explanation.
+The application must reject files it cannot decode as an image, and files above the accepted input size, with a clear explanation.
 
-The exact format and size limits will be confirmed in the technical plan.
+Images are downscaled to a maximum edge of 512 pixels at JPEG quality 0.7 before being stored.
 
-### PU-6: Upload states
+Because images are held in browser storage, total wardrobe capacity is bounded. This is treated as an accepted prototype limitation rather than a guaranteed number of items, and the application must fail clearly when storage is exhausted.
 
-The interface must provide:
+### PU-6: Photo states
 
-- Uploading state
-- Success state
-- Failure state
+Photo selection is processed on the device rather than uploaded to a server. The interface must therefore provide:
+
+- Processing state
+- Preview-ready state
+- Error state
 - Retry path
 
 ### PU-7: Wardrobe display
@@ -298,7 +310,7 @@ The application will not automatically identify, classify, describe or remove th
 
 The user must provide an occasion before requesting a recommendation.
 
-The first version may use free text, predefined options or a combination of both, provided users can express the required situation clearly.
+The interface will offer suggested occasion chips alongside a free-text field. Chips make the common cases fast and keep evaluation inputs consistent; free text preserves situations the chips do not cover.
 
 ### RI-2: Weather context
 
@@ -308,7 +320,7 @@ Automatic weather retrieval is not required.
 
 ### RI-3: Additional context
 
-The user may provide optional natural-language preferences or constraints.
+The user may provide optional natural-language preferences or constraints in the `preferences` field.
 
 ### RI-4: Minimum wardrobe
 
@@ -389,12 +401,15 @@ The application must validate that:
 
 If the model response fails validation, the application must not display the invalid recommendation as successful.
 
-It should either:
+The application will attempt **one** controlled retry, and only when the response was received but failed structural or semantic validation — for example a malformed payload, an unknown identifier or a category mismatch.
 
-- Retry safely within a defined limit, or
-- Show an error and allow the user to try again
+It must **not** retry:
 
-The retry strategy will be decided in the technical plan.
+- Invalid or rejected requests
+- Authentication or configuration failures
+- Ordinary provider errors and timeouts
+
+If the retry also fails validation, the application must show an error and allow the user to submit a new request.
 
 ---
 
@@ -471,7 +486,7 @@ Hard constraints must take priority over creative variety.
 
 ### Photo upload
 
-- As a user, I want to upload a photo directly from my device so that I do not need to find or paste an image URL.
+- As a user, I want to add a photo directly from my device so that my wardrobe is not limited to text descriptions.
 - As a user, I want to preview the photo before saving so that I know I selected the correct image.
 - As a user, I want to recognise garments visually when browsing my wardrobe.
 
@@ -535,9 +550,12 @@ Each failure state must provide a clear next action where recovery is possible.
 ### Security
 
 - Model API credentials must not be exposed in client-side code.
-- Image upload must validate file type and size.
+- Image selection must validate that the file is a decodable image and within the accepted size.
 - User-supplied text must be handled safely.
 - Model responses must be treated as untrusted input and validated.
+- The model request must enforce strict input, request-body and timeout limits.
+
+V2 will not implement request throttling. The recommendation endpoint is publicly reachable, so abuse of the deployed prototype is an accepted and documented limitation rather than a solved problem. Strict input, body-size and timeout limits bound the cost of any single request.
 
 ### Privacy and data minimisation
 
@@ -602,8 +620,8 @@ V2 success will be assessed across usability, technical validity, AI quality and
 
 - Users understand the result of selecting “Wear this”.
 - The worn state remains visible after navigation or refresh.
-- Users can upload a clothing photo without using an external URL.
-- Uploaded images remain associated with the correct wardrobe item.
+- Users can add a clothing photo directly from their device.
+- Saved images remain associated with the correct wardrobe item.
 - Existing items without photos continue to work.
 
 ### 15.2 Technical recommendation success
@@ -792,11 +810,11 @@ The initial V2 release will not include:
 
 ---
 
-## 21. Open Technical Decisions
+## 21. Resolved Technical Decisions
 
-The following decisions should be resolved with Claude Code after it reviews the repository:
+The decisions below were open when this PRD was drafted. They have since been resolved against the existing repository and are specified in the [V2 Technical Plan](./v2-technical-plan.md):
 
-- Where uploaded images should be stored
+- Where images should be stored
 - How image references should be represented in the existing data model
 - Where the server-side model request should run
 - Which model and SDK should be used
@@ -807,7 +825,7 @@ The following decisions should be resolved with Claude Code after it reviews the
 - Which current components can support the new interfaces
 - Whether any existing fields or categories need migration
 
-These are technical implementation decisions rather than unresolved product-strategy questions.
+These were technical implementation decisions rather than unresolved product-strategy questions. The technical plan is the source of truth for how each was answered.
 
 ---
 

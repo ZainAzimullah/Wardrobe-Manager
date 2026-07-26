@@ -67,7 +67,7 @@ One participant said:
 
 Text descriptions made garments harder to recognise and compare, limiting the usefulness of the wardrobe when creating an outfit.
 
-The current image-URL approach is also unsuitable for ordinary users. A practical wardrobe experience should allow users to select a photo directly from their device.
+The MVP stores no clothing imagery at all. Wardrobe items are text-only records identified by name, type and a colour swatch. A practical wardrobe experience should allow users to select a photo directly from their device.
 
 Full research findings are documented in [MVP Findings and Recommendations](./findings-and-recommendations.md).
 
@@ -296,7 +296,7 @@ V2 should test one focused recommendation workflow rather than attempt to build 
 
 * Users understand what “Wear this” does
 * The selected or worn state remains visible
-* Users can upload a clothing photo without using an external image URL
+* Users can add a clothing photo directly from their device
 * Users can recognise saved items from the wardrobe view
 
 ### Recommendation quality

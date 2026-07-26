@@ -90,7 +90,7 @@ V2 should answer the following questions.
 
 - Do users understand what happens after selecting “Wear this”?
 - Is the worn state visible after navigation or refresh?
-- Can users upload a clothing photo without relying on an image URL?
+- Can users add a clothing photo directly from their device?
 - Can users recognise wardrobe items more easily when images are present?
 
 ### Recommendation validity
@@ -141,25 +141,29 @@ A fixed test wardrobe should be used so that results can be compared across prom
 
 The initial fixture should contain enough variation to support several contexts while still creating some deliberately impossible requests.
 
+The fixture uses the same fields as a real wardrobe item, so it can be loaded into the application unchanged. `colour` is therefore restricted to the values the product actually supports (White, Black, Navy, Grey, Brown, Green, Blue, Red, Other). Material, warmth, formality and specific shade live in `details`.
+
 ### Tops
 
-| ID | Item | Colour | Material | Style and relevant attributes |
-|---|---|---|---|---|
-| `top_01` | White Oxford shirt | White | Cotton | Smart, long-sleeved, suitable for office or dinner |
-| `top_02` | Navy merino polo | Navy | Merino wool | Smart-casual, warm, refined |
-| `top_03` | Grey crew-neck T-shirt | Grey | Cotton | Casual, lightweight |
-| `top_04` | Beige linen shirt | Beige | Linen | Smart-casual, breathable, warm-weather |
-| `top_05` | Pale blue casual shirt | Pale blue | Cotton | Smart-casual, versatile |
+| ID | Item | Colour | Details |
+|---|---|---|---|
+| `top_01` | White Oxford shirt | White | Cotton, smart, long-sleeved, suitable for office or dinner |
+| `top_02` | Navy merino polo | Navy | Merino wool, warm, smart-casual, refined |
+| `top_03` | Grey crew-neck T-shirt | Grey | Cotton, lightweight, casual |
+| `top_04` | Beige linen shirt | Other | Linen, beige, breathable, smart-casual, warm-weather |
+| `top_05` | Pale blue casual shirt | Blue | Cotton, pale blue, smart-casual, versatile |
 
 ### Bottoms
 
-| ID | Item | Colour | Material | Style and relevant attributes |
-|---|---|---|---|---|
-| `bottom_01` | Charcoal wool trousers | Charcoal | Wool | Smart, warm, suitable for office or dinner |
-| `bottom_02` | Beige chinos | Beige | Cotton | Smart-casual, versatile |
-| `bottom_03` | Dark indigo jeans | Indigo | Denim | Casual |
-| `bottom_04` | White linen trousers | White | Linen | Breathable, warm-weather |
-| `bottom_05` | Grey tailored trousers | Grey | Wool blend | Smart, moderately warm |
+| ID | Item | Colour | Details |
+|---|---|---|---|
+| `bottom_01` | Charcoal wool trousers | Grey | Wool, charcoal, warm, smart, suitable for office or dinner |
+| `bottom_02` | Beige chinos | Other | Cotton, beige, smart-casual, versatile |
+| `bottom_03` | Dark indigo jeans | Blue | Denim, dark indigo, casual |
+| `bottom_04` | White linen trousers | White | Linen, breathable, warm-weather |
+| `bottom_05` | Grey tailored trousers | Grey | Wool blend, tailored, smart, moderately warm |
+
+Two shades in this fixture — beige and charcoal — are not distinct values in the product's colour palette and are expressed in `details` instead. Scenario 9 therefore tests whether the model reads `details` rather than matching on the `colour` field alone, which is a stronger check than the original fixture provided.
 
 The final fixture should be stored in a repeatable format, such as:
 
@@ -167,7 +171,9 @@ The final fixture should be stored in a repeatable format, such as:
 evals/wardrobe-fixture.json
 ```
 
-Images may be shown in the application, but image content will not be supplied to the model in V2.
+The application must provide a developer-only way to load this fixture into local storage, so that scenario evaluation and the final user evaluation run against exactly the same wardrobe the runner uses.
+
+Images may be shown in the application, but image content will not be supplied to the model in V2. The fixture carries no images.
 
 ---
 
@@ -177,12 +183,14 @@ The initial evaluation will use 12 scenarios.
 
 Each scenario should include:
 
-- Occasion
-- Weather context
-- Optional preferences or constraints
+- Occasion (`occasion`)
+- Weather context (`weather`)
+- Optional preferences or constraints (`preferences`)
 - Expected behaviour
 - Hard constraints
 - Notes for human scoring
+
+Where a scenario's hard constraints exclude specific garments, those exclusions should be recorded as item identifiers in the scenario file so the runner can check them automatically rather than relying on human judgement.
 
 The scenarios should be stored in a repeatable format, such as:
 
@@ -615,10 +623,23 @@ To keep the evaluation proportionate while accounting for variability:
   - System instructions
   - Prompt template
   - Structured schema
-  - Model settings
+  - Effort setting
   - Test wardrobe
 
 The model name, configuration and evaluation date must be recorded.
+
+### Repeatability and non-determinism
+
+Repeatability here means a **fixed, recorded configuration**, not identical output.
+
+The model exposes no sampling controls, so two runs of the same scenario under an identical configuration may legitimately produce different valid recommendations. This is expected and is the reason each scenario is run twice.
+
+Accordingly:
+
+- Every recorded configuration field above must be pinned and written into the results.
+- Comparisons between rounds are made across the scenario set, not by diffing individual responses.
+- A difference between two runs of one scenario is a data point about variability, not a defect.
+- A change is only judged an improvement if it holds across the set rather than fixing a single run.
 
 ---
 
@@ -691,6 +712,7 @@ evals/results.csv
 | Evaluation round | Identifier for the run |
 | Date | Date of evaluation |
 | Model | Model and version |
+| Effort | Effort setting used for the run |
 | Prompt version | Version of instructions or template |
 | Scenario ID | Scenario being evaluated |
 | Run number | First or second run |

@@ -177,8 +177,57 @@ The following are consciously left out to keep the MVP simple:
 |---|---|
 | TypeScript | Adds setup overhead; plain JavaScript is fine for an MVP this size |
 | React Router | With 8 screens and no deep linking needed, simple state-based navigation is sufficient |
-| Backend / API | localStorage removes any need for a server, database, or auth for the MVP |
-| Testing framework | Manual testing is sufficient for MVP validation; add Jest / Vitest post-validation |
+| Backend / API | localStorage removes any need for a server, database, or auth for the MVP — superseded in V2 by a single serverless function, see §8 |
+| Testing framework | Manual testing is sufficient for MVP validation; add Jest / Vitest post-validation — Vitest added in V2, see §8 |
 | PWA / Service Worker | Offline support is out of scope per the PRD |
 | Component library | Tailwind utility classes are enough; a full library adds bundle size and learning curve |
 | Error monitoring | Sentry etc. are valuable post-launch but unnecessary overhead for MVP |
+
+---
+
+## 8. V2 Additions
+
+Sections 1–7 describe the MVP stack and remain accurate. V2 adds the minimum needed to run one AI recommendation securely and to evaluate it repeatably. Full detail is in the [V2 Technical Plan](./v2-technical-plan.md).
+
+### Stack changes
+
+| Layer | MVP | V2 |
+|---|---|---|
+| Backend | None | One Vercel Serverless Function at `/api/recommend` |
+| Model access | — | Anthropic Messages API via `@anthropic-ai/sdk` |
+| Model | — | `claude-sonnet-5` at low effort |
+| Testing | Manual only | Vitest for pure schema and validation modules |
+| Local dev | `npm run dev` | `vercel dev` (serves the SPA and `/api` together) |
+
+Everything else is unchanged: React, Vite, Tailwind, Context, localStorage, Mixpanel, Vercel.
+
+### 8.1 — Serverless function
+
+**Alternatives considered:** client-side API call, a separate Express or Next.js service.
+
+- A client-side call would place the API key in the shipped bundle, where it is public. This is disqualifying, not merely untidy.
+- Vercel detects `/api/*.js` alongside a Vite build with no configuration, so the function costs no new hosting, no new pipeline and no framework.
+- The function is stateless and single-purpose. It does not introduce a database, sessions or authentication.
+
+### 8.2 — Model and SDK
+
+**Alternatives considered:** a larger model, raw `fetch` against the HTTP API.
+
+- `claude-sonnet-5` at low effort is the starting point for a bounded, schema-constrained task. Model and effort are treated as evaluation variables: a change must be justified by evaluation results, not by preference.
+- The official SDK is used rather than raw `fetch`, for typed structured-output support and error classes.
+- Structured output is requested through the API's JSON-schema output format, so the response shape is constrained at generation time and re-validated by the application afterwards.
+
+### 8.3 — Testing
+
+**Alternatives considered:** no automated tests, full component testing.
+
+- Vitest covers the schema and validation modules only. These are pure functions with no React, no network and no API key, so the suite is fast and deterministic.
+- The evaluation plan's invalid-response cases become this suite. That is the main reason to add a test runner at all.
+- Component and end-to-end testing remain out of scope; the existing screens are verified manually.
+
+### 8.4 — Environment variables
+
+| Variable | Where | Notes |
+|---|---|---|
+| `VITE_MIXPANEL_TOKEN` | Client bundle | Existing. `VITE_` prefix intentional — this value is public. |
+| `ANTHROPIC_API_KEY` | Server only | **No `VITE_` prefix.** Vite only inlines `VITE_`-prefixed variables into the client bundle, so an unprefixed name cannot reach the browser. |

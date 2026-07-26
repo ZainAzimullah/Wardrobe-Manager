@@ -8,6 +8,19 @@ This project is a Minimum Viable Product (MVP) designed to validate a behavioura
 Core hypothesis:
 If users can create and save outfits from clothes they already own, they will reduce the effort required to decide what to wear and will return to reuse saved outfits.
 
+### Current iteration: V2
+
+The MVP is built and has been user-tested. Work is now on V2, which adds three things to the validated MVP: clearer "Wear this" loop closure, direct photo upload, and one AI outfit recommendation grounded in the user's saved wardrobe.
+
+The sections below still describe the MVP scope and remain the baseline. Where V2 extends them, the V2 documents take precedence:
+
+- [V2 Opportunity Brief](docs/v2-opportunity-brief.md) — evidence and framing
+- [V2 PRD](docs/v2-prd.md) — requirements
+- [V2 Evaluation Plan](docs/v2-evaluation-plan.md) — how V2 is judged
+- [V2 Technical Plan](docs/v2-technical-plan.md) — the agreed implementation approach
+
+The MVP "Out of Scope" list below still applies to anything not named in the V2 documents.
+
 ---
 
 ## Core Behaviour Loop
@@ -63,7 +76,7 @@ Do not add these unless explicitly asked.
 - Styling: Tailwind CSS
 - State: React useState + useContext
 - Storage: localStorage only
-- No backend
+- No general-purpose backend. The single exception is one Vercel Serverless Function under `/api`, added in V2 solely to keep the model API key off the client. No database, no session state, no other endpoints.
 - No authentication
 - Mobile-first design
 - Hosted on Vercel
@@ -81,6 +94,8 @@ ClothingItem:
 - type (top | bottom)
 - colour
 - createdAt
+- details (optional, V2) — free-text garment description: material, warmth, fit, formality, shade
+- photo (optional, V2) — downscaled JPEG data URL
 
 Outfit:
 - id
@@ -88,8 +103,11 @@ Outfit:
 - topId
 - bottomId
 - createdAt
+- lastWornAt (optional, V2) — ISO date of the most recent "Wear this"
 
 An outfit always consists of exactly one top and one bottom.
+
+All V2 fields are optional. Records written by the MVP remain valid and must continue to work without migration.
 
 ---
 
