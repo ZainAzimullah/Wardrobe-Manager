@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import { useWardrobe } from '../context/WardrobeContext'
 import { track } from '../utils/analytics'
-import { colourStyle } from '../utils/colours'
 import { formatWornDate } from '../utils/dates'
+import ItemThumb from './ItemThumb'
 
 export default function SavedOutfitsList({ navigate }) {
   const { outfits, clothingItems } = useWardrobe()
@@ -77,7 +77,7 @@ function ItemRow({ label, item }) {
   return (
     <div className="flex items-center gap-2">
       <span className="text-xs text-gray-400 w-12">{label}</span>
-      <div className="w-5 h-5 rounded-full flex-shrink-0" style={colourStyle(item.colour)} />
+      <ItemThumb item={item} size="xs" />
       <span className="text-sm text-gray-700">{item.name}</span>
     </div>
   )

@@ -13,10 +13,13 @@ export function WardrobeProvider({ children }) {
   const [clothingItems, setClothingItems] = useState(() => loadClothingItems())
   const [outfits, setOutfits] = useState(() => loadOutfits())
 
+  // Returns the storage result so the caller can surface a failure instead of
+  // navigating away as if the item had actually been saved.
   const addClothingItem = useCallback((item) => {
     const updated = [...loadClothingItems(), item]
-    saveClothingItems(updated)
-    setClothingItems(loadClothingItems())
+    const result = saveClothingItems(updated)
+    if (result.ok) setClothingItems(loadClothingItems())
+    return result
   }, [])
 
   const addOutfit = useCallback((outfit) => {

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useWardrobe } from '../context/WardrobeContext'
 import { track } from '../utils/analytics'
-import { colourStyle } from '../utils/colours'
+import ItemThumb from './ItemThumb'
 
 export default function ItemPicker({ navigate, params }) {
   const { tops, bottoms } = useWardrobe()
@@ -68,7 +68,7 @@ export default function ItemPicker({ navigate, params }) {
                   isSelected ? 'border-gray-900 bg-gray-50' : 'border-gray-100 bg-white'
                 }`}
               >
-                <div className="w-8 h-8 rounded-full flex-shrink-0" style={colourStyle(item.colour)} />
+                <ItemThumb item={item} size="sm" />
                 <div>
                   <p className="text-sm font-medium text-gray-900">{item.name}</p>
                   <p className="text-xs text-gray-500">{item.colour}</p>

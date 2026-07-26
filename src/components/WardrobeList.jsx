@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useWardrobe } from '../context/WardrobeContext'
 import { track } from '../utils/analytics'
-import { colourStyle } from '../utils/colours'
+import ItemThumb from './ItemThumb'
 
 export default function WardrobeList({ navigate }) {
   const { tops, bottoms, clothingItems } = useWardrobe()
@@ -67,7 +67,7 @@ function Section({ title, items, navigate }) {
               onClick={() => navigate('item-detail', { itemId: item.id })}
               className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm text-left flex items-center gap-3"
             >
-              <div className="w-8 h-8 rounded-full flex-shrink-0" style={colourStyle(item.colour)} />
+              <ItemThumb item={item} size="sm" />
               <div>
                 <p className="font-medium text-gray-900 text-sm">{item.name}</p>
                 <p className="text-xs text-gray-500">{item.colour}</p>

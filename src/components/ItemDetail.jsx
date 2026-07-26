@@ -1,5 +1,5 @@
 import { useWardrobe } from '../context/WardrobeContext'
-import { colourStyle } from '../utils/colours'
+import ItemThumb from './ItemThumb'
 
 export default function ItemDetail({ navigate, params }) {
   const { clothingItems } = useWardrobe()
@@ -28,13 +28,19 @@ export default function ItemDetail({ navigate, params }) {
 
       <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
         <div className="flex justify-center mb-6">
-          <div className="w-20 h-20 rounded-full" style={colourStyle(item.colour)} />
+          <ItemThumb item={item} size="lg" />
         </div>
         <div className="flex flex-col gap-1">
           <Row label="Name" value={item.name} />
           <Row label="Type" value={item.type === 'top' ? 'Top' : 'Bottom'} />
           <Row label="Colour" value={item.colour} />
         </div>
+        {item.details && (
+          <div className="mt-4 pt-4 border-t border-gray-50">
+            <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Details</p>
+            <p className="text-sm text-gray-700">{item.details}</p>
+          </div>
+        )}
       </div>
 
       <p className="text-center text-xs text-gray-400 mt-6">Editing items is coming soon.</p>

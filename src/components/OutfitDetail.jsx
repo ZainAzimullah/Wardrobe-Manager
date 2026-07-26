@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useWardrobe } from '../context/WardrobeContext'
 import { track } from '../utils/analytics'
-import { colourStyle } from '../utils/colours'
 import { formatWornDate } from '../utils/dates'
+import ItemThumb from './ItemThumb'
 
 const STORAGE_ERRORS = {
   quota: 'Your device storage is full, so this could not be saved.',
@@ -109,7 +109,7 @@ function ItemSection({ label, item }) {
   if (!item) return null
   return (
     <div className="flex items-center gap-4">
-      <div className="w-12 h-12 rounded-full flex-shrink-0" style={colourStyle(item.colour)} />
+      <ItemThumb item={item} size="md" />
       <div>
         <p className="text-xs text-gray-400 uppercase tracking-wide mb-0.5">{label}</p>
         <p className="font-medium text-gray-900">{item.name}</p>
