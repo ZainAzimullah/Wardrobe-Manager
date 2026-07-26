@@ -275,9 +275,11 @@ Selected images are re-encoded as JPEG during processing, so the stored format i
 
 ### PU-5: File validation
 
-The application must reject files it cannot decode as an image, and files above the accepted input size, with a clear explanation.
+The application must reject files it cannot decode as an image, and files above the accepted source size, with a clear explanation.
 
-Images are downscaled to a maximum edge of 512 pixels at JPEG quality 0.7 before being stored.
+The maximum accepted source image is **10 MB**. Files above this are rejected before decoding, so an oversized image never reaches the downscaling step.
+
+Accepted images are then downscaled to a maximum edge of 512 pixels at JPEG quality 0.7 before being stored.
 
 Because images are held in browser storage, total wardrobe capacity is bounded. This is treated as an accepted prototype limitation rather than a guaranteed number of items, and the application must fail clearly when storage is exhausted.
 
@@ -312,6 +314,17 @@ The user must provide an occasion before requesting a recommendation.
 
 The interface will offer suggested occasion chips alongside a free-text field. Chips make the common cases fast and keep evaluation inputs consistent; free text preserves situations the chips do not cover.
 
+The initial chip set is:
+
+- Office day
+- Presentation
+- Client dinner
+- Smart-casual event
+- Casual outing
+- Coffee or catch-up
+
+Free-text occasion entry must remain available at all times. Selecting a chip must not disable or replace it.
+
 ### RI-2: Weather context
 
 The user may manually provide weather information.
@@ -334,6 +347,18 @@ If the minimum wardrobe is not available, the application must explain what the 
 ### RI-5: Input validation
 
 The application must prevent empty or invalid recommendation requests.
+
+The following limits apply and are enforced on the server as well as in the interface:
+
+| Input | Limit |
+|---|---|
+| `occasion` | Required, 1–120 characters |
+| `weather` | Optional, up to 80 characters |
+| `preferences` | Optional, up to 300 characters |
+| `details` (per wardrobe item) | Optional, up to 200 characters |
+| Wardrobe items sent per request | 2–60, including at least one top and one bottom |
+
+These bound the cost and size of any single request and are the primary mitigation for the unthrottled endpoint described in §13.
 
 ### RI-6: Submission state
 

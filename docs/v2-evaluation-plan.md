@@ -192,6 +192,14 @@ Each scenario should include:
 
 Where a scenario's hard constraints exclude specific garments, those exclusions should be recorded as item identifiers in the scenario file so the runner can check them automatically rather than relying on human judgement.
 
+### Occasion wording
+
+The application offers six suggested occasion chips — Office day, Presentation, Client dinner, Smart-casual event, Casual outing, Coffee or catch-up — alongside a free-text field.
+
+Scenario occasions are sent as literal strings and are **not** restricted to the chip set. Several scenarios deliberately use free-text phrasing the chips do not cover, including the black-tie wedding and the evening event, because the free-text path must be evaluated too.
+
+The chip labels are fixed for the duration of an evaluation round. Changing them alters the most common real-world input and therefore requires a new round rather than a comparison against previous results.
+
 The scenarios should be stored in a repeatable format, such as:
 
 ```text

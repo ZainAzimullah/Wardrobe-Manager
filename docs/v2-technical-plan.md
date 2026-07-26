@@ -54,11 +54,11 @@ One property of this router is load-bearing for V2: **`params` carries whole obj
 | 1 | Add one optional `ClothingItem.details` free-text field | The model needs material, warmth, fit and formality to answer six of the twelve evaluation scenarios. One optional text input is the smallest change that supplies it; structured enums would mean two more pickers and more UI for the same signal. Named `details` so it is never confused with the request-level `preferences`. |
 | 2 | Do not expand the colour palette; restate the fixture in supported colours with shade in `details` | The palette is a product decision and should not be reshaped to suit a test fixture. Keeping it fixed also makes the fixture enterable through the real Add Item screen, which the final user evaluation needs. |
 | 3 | Photos as client-side downscaled JPEG data URLs in `localStorage` | Keeps the "no backend for user data" property intact. Any blob store or CDN would add infrastructure disproportionate to a contained experiment. |
-| 4 | 512px max edge, JPEG quality 0.7; capacity is a documented prototype limitation | A raw phone photo base64-encodes to several megabytes against a ~5MB origin budget. Downscaling brings a typical garment photo to roughly 40–80KB stored. The exact ceiling depends on image content, so the honest statement is a bounded prototype, not a guaranteed item count. |
+| 4 | 512px max edge, JPEG quality 0.7; 10 MB maximum source file; capacity is a documented prototype limitation | A raw phone photo base64-encodes to several megabytes against a ~5MB origin budget. Downscaling brings a typical garment photo to roughly 40–80KB stored. The 10 MB source cap is checked before decoding, so an oversized file is rejected without allocating a decode buffer. The exact stored ceiling depends on image content, so the honest statement is a bounded prototype, not a guaranteed item count. |
 | 5 | `claude-sonnet-5` at low effort; changes must be evaluation-driven | The task is small, bounded and schema-constrained. Starting at the lower cost point and letting the evaluation decide is the disciplined order; upgrading later is a one-line change with a recorded before/after. |
 | 6 | One controlled retry, only on structural or semantic validation failure | A malformed or ungrounded response is often transient and worth one more attempt. Bad requests, auth failures and provider errors are not — retrying them wastes time and money and hides the real fault. |
 | 7 | Persist `lastWornAt` only | Satisfies every "Wear this" requirement. A wear count or history implies a features (streaks, frequency, analytics) V2 is not testing. |
-| 8 | Occasion chips plus free text | Chips make the common path fast and keep evaluation phrasing consistent; free text preserves situations the chips do not cover. |
+| 8 | Occasion chips plus free text. Initial chips: Office day, Presentation, Client dinner, Smart-casual event, Casual outing, Coffee or catch-up | Chips make the common path fast and keep evaluation phrasing consistent; free text preserves situations the chips do not cover. Six chips span the formality range the fixture supports without crowding a mobile screen. Free-text entry always remains available. |
 | 9 | `vercel dev` for local development | The Vite dev server does not serve `/api`. `vercel dev` runs both with no custom proxy code to write or maintain. |
 | 10 | Vitest for pure schema and validation modules only | Turns the evaluation plan's twelve invalid-response cases into a deterministic suite needing no API key and no network. One devDependency. No component or end-to-end testing. |
 | 11 | Developer-only fixture loader | Scenario evaluation and the final user evaluation must run against the same wardrobe the runner uses. |
@@ -81,7 +81,7 @@ One property of this router is load-bearing for V2: **`params` carries whole obj
 | `colour` | one of 9 palette values | unchanged | **Palette not extended** (decision 2) |
 | `createdAt` | ISO string | unchanged | |
 | `details` | — | `string \| undefined` | **New.** Free text, ≤200 chars. Material, warmth, fit, formality, shade |
-| `photo` | — | `string \| undefined` | **New.** `data:image/jpeg;base64,…`, ≤512px edge, q0.7 |
+| `photo` | — | `string \| undefined` | **New.** `data:image/jpeg;base64,…`, ≤512px edge, q0.7. Source file ≤10 MB, checked before decode |
 
 ### Outfit
 
@@ -271,6 +271,8 @@ The client never receives the key, the system prompt, or the raw model response.
 | `wardrobe` | 2–60 items, ≥1 top and ≥1 bottom |
 | Item fields | `id` ≤64, `name` ≤120, `details` ≤200; `type` ∈ `{top, bottom}` |
 | Unknown keys | stripped by re-projection, not passed through |
+
+These limits are confirmed rather than provisional, and are mirrored in [PRD RI-5](./v2-prd.md) so the product requirement and the implementation cannot drift apart. The interface enforces them for feedback; the server enforces them for safety.
 
 ### Model output as untrusted input
 
@@ -485,7 +487,8 @@ Each slice ships working, is independently verifiable, and leaves the applicatio
 - A photo can be selected from the device and previewed before saving (PU-1, PU-2)
 - One image per item; selecting again replaces the preview (PU-3)
 - Common mobile formats are accepted and normalised to JPEG (PU-4)
-- Undecodable or oversized files are rejected with a clear explanation (PU-5)
+- Undecodable files are rejected with a clear explanation (PU-5)
+- A file over 10 MB is rejected **before** decoding, with a clear explanation (PU-5)
 - Processing, preview-ready, error and retry states all appear (PU-6)
 - Stored images are ≤512px on the long edge
 - The image appears wherever the item is displayed (PU-7)
@@ -504,8 +507,10 @@ No network access in this slice.
 **Acceptance criteria**
 - `npm test` passes with all twelve invalid-response cases plus inbound-validation cases
 - The suite runs with no API key set and no network
-- The context form captures occasion (chips + free text), weather and preferences (RI-1, RI-2, RI-3)
-- Submission is blocked without an occasion (RI-5)
+- The context form captures occasion, weather and preferences (RI-1, RI-2, RI-3)
+- All six occasion chips are present: Office day, Presentation, Client dinner, Smart-casual event, Casual outing, Coffee or catch-up
+- Free-text occasion entry remains usable whether or not a chip is selected
+- Submission is blocked without an occasion, and every RI-5 length limit is enforced in the form (RI-5)
 - The insufficient-wardrobe state explains what to add (RI-4)
 - All seven experience states are reachable from mocked data: default, insufficient wardrobe, loading, success, no suitable outfit, invalid response, service failure
 - The success state renders items from local wardrobe records, not from mock text (RD-3)

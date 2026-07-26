@@ -12,12 +12,21 @@ If users can create and save outfits from clothes they already own, they will re
 
 The MVP is built and has been user-tested. Work is now on V2, which adds three things to the validated MVP: clearer "Wear this" loop closure, direct photo upload, and one AI outfit recommendation grounded in the user's saved wardrobe.
 
-The sections below still describe the MVP scope and remain the baseline. Where V2 extends them, the V2 documents take precedence:
+V2 reference documents:
 
 - [V2 Opportunity Brief](docs/v2-opportunity-brief.md) — evidence and framing
 - [V2 PRD](docs/v2-prd.md) — requirements
 - [V2 Evaluation Plan](docs/v2-evaluation-plan.md) — how V2 is judged
 - [V2 Technical Plan](docs/v2-technical-plan.md) — the agreed implementation approach
+
+**Every rule in this file remains in force.** The V2 documents describe additional work; they do not relax the coding guidelines, architectural constraints, UX principles or scope discipline set out below.
+
+Two narrow exceptions, both already reflected in this file:
+
+- The **Technical Constraints** section permits one serverless function under `/api`, solely to keep the model API key off the client.
+- The **Data Model** section lists three optional V2 fields.
+
+The V2 Technical Plan is authoritative only for V2-specific implementation detail — schemas, validation rules, module layout, slice sequencing — and only where it documents a conflict with this file explicitly, as it does in its "Document Conflicts and Resolutions" section. An undocumented disagreement between a V2 document and this file is a defect in that document, not a licence to depart from these rules. Raise it rather than resolving it silently.
 
 The MVP "Out of Scope" list below still applies to anything not named in the V2 documents.
 
