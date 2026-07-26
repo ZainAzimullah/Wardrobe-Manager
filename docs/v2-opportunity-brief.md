@@ -69,7 +69,7 @@ Text descriptions made garments harder to recognise and compare, limiting the us
 
 The current image-URL approach is also unsuitable for ordinary users. A practical wardrobe experience should allow users to select a photo directly from their device.
 
-Full research findings are documented in [MVP Findings and Recommendations](./Findings_and_Recommendations.md).
+Full research findings are documented in [MVP Findings and Recommendations](./findings-and-recommendations.md).
 
 ---
 

@@ -4,7 +4,7 @@ A mobile-first web app for reducing outfit decision fatigue — built end-to-end
 
 **→ [wardrobe-manager-eight.vercel.app](https://wardrobe-manager-eight.vercel.app/)**
 
-![Prototype Preview](docs/images/prototype_preview.png)
+![Prototype Preview](docs/images/prototype-preview.png)
 
 ---
 
@@ -14,31 +14,31 @@ A mobile-first web app for reducing outfit decision fatigue — built end-to-end
 
 | Artefact | Preview |
 |---|---|
-| [Opportunity-Solution Tree](docs/images/opportunity_solution_tree.png) | ![OST](docs/images/opportunity_solution_tree.png) |
-| [Jobs-To-Be-Done](docs/images/jobs_to_be_done.png) | ![JTBD](docs/images/jobs_to_be_done.png) |
-| [Story Map & MVP Scope](docs/images/story_map.png) | ![Story Map](docs/images/story_map.png) |
-| [Metrics Tree](docs/images/metrics_tree.png) | ![Metrics Tree](docs/images/metrics_tree.png) |
-| [MVP Success Metrics](docs/images/mvp_success_metrics.png) | ![Success Metrics](docs/images/mvp_success_metrics.png) |
-| [Assumptions Map](docs/images/assumptions_map.png) | ![Assumptions](docs/images/assumptions_map.png) |
+| [Opportunity-Solution Tree](docs/images/opportunity-solution-tree.png) | ![OST](docs/images/opportunity-solution-tree.png) |
+| [Jobs-To-Be-Done](docs/images/jobs-to-be-done.png) | ![JTBD](docs/images/jobs-to-be-done.png) |
+| [Story Map & MVP Scope](docs/images/story-map.png) | ![Story Map](docs/images/story-map.png) |
+| [Metrics Tree](docs/images/metrics-tree.png) | ![Metrics Tree](docs/images/metrics-tree.png) |
+| [MVP Success Metrics](docs/images/mvp-success-metrics.png) | ![Success Metrics](docs/images/mvp-success-metrics.png) |
+| [Assumptions Map](docs/images/assumptions-map.png) | ![Assumptions](docs/images/assumptions-map.png) |
 
 ### Definition
 
 | Document | Description |
 |---|---|
-| [PRD](docs/PRD.md) | Problem, target user, features, success metrics, open questions |
-| [User Stories](docs/User_Stories.md) | Acceptance criteria for all five features |
-| [Screen Structure](docs/Screens.md) | 8 screens, navigation flows, first-time user journey |
-| [Database Schema](docs/DB_Schema.md) | Two-entity localStorage model with read/write patterns |
-| [Tech Stack](docs/Tech_Stack.md) | Stack decisions and rationale |
+| [PRD](docs/prd.md) | Problem, target user, features, success metrics, open questions |
+| [User Stories](docs/user-stories.md) | Acceptance criteria for all five features |
+| [Screen Structure](docs/screens.md) | 8 screens, navigation flows, first-time user journey |
+| [Database Schema](docs/db-schema.md) | Two-entity localStorage model with read/write patterns |
+| [Tech Stack](docs/tech-stack.md) | Stack decisions and rationale |
 
 ### Measurement
 
 | Artefact | Link |
 |---|---|
-| User Test Instructions | [User_Test.md](./docs/User_Test.md) |
+| User Test Instructions | [user-test.md](./docs/user-test.md) |
 | Survey | [Google Form](https://forms.gle/sfTz5pUTqtgJSzbY8) |
 | Analytics | [Mixpanel Dashboard](https://mixpanel.com/p/PNCeGJf582SguPVnKLKaow) |
-| Findings & Recommendations | [Full Report](docs/Findings_and_Recommendations.md) |
+| Findings & Recommendations | [Full Report](docs/findings-and-recommendations.md) |
 
 ---
 
@@ -128,7 +128,7 @@ The core experience landed as intended:
 
 **Next steps:** fix "Wear this" confirmation state immediately. Ship photo upload in v2. The core loop is proven — the path to a 4+ helpfulness score runs through these two fixes.
 
-*Full report: [`/docs/Findings_and_Recommendations.md`](docs/Findings_and_Recommendations.md)*
+*Full report: [`/docs/findings-and-recommendations.md`](docs/findings-and-recommendations.md)*
 
 ---
 

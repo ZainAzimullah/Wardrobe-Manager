@@ -9,14 +9,14 @@
 Six participants tested the app on 12–13 April 2026 and completed a survey. The survey combined open-ended qualitative questions with a single 5-point Likert scale item measuring how much the app helped them decide what to wear. Mixpanel analytics data from four participants over the same 24-hour window supplements the survey findings. Two sessions were not captured in analytics due to instrumentation limitations, so behavioural insights are based on the subset of tracked users.
 
 - [Survey](https://forms.gle/sfTz5pUTqtgJSzbY8)
-- [Responses](Survey_Responses.csv)
+- [Responses](survey-responses.csv)
 - [Analytics (Mixpanel)](https://mixpanel.com/p/PNCeGJf582SguPVnKLKaow)
 
 ---
 
 ## Key Metrics
 
-![Key metrics summary](images/chart_metrics.png)
+![Key metrics summary](images/chart-metrics.png)
 
 | Metric | Result | Target | Met? |
 |---|---|---|---|
@@ -32,7 +32,7 @@ Six participants tested the app on 12–13 April 2026 and completed a survey. Th
 
 All 4 instrumented users passed through every step of the outfit creation funnel with zero drop-off.
 
-![Outfit creation funnel](images/chart_funnel.png)
+![Outfit creation funnel](images/chart-funnel.png)
 
 ---
 
@@ -76,7 +76,7 @@ This also contextualises the 3.0/5 average helpfulness score. The core loop work
 
 ## Finding 4 — Navigation depth and "Wear this" ambiguity suppress the helpfulness score
 
-![Helpfulness Likert distribution](images/chart_likert.png)
+![Helpfulness Likert distribution](images/chart-likert.png)
 
 The 5-point Likert question returned a mean of **3.0**. Four of six respondents chose exactly 3 ("neutral"), with one scoring 4 and one scoring 2. No respondent scored it a 5.
 
@@ -86,7 +86,7 @@ Two factors explain this ceiling: the "Wear this" confusion (Finding 2), and a s
 
 ## Finding 5 — Users are already projecting beyond MVP scope
 
-![Feature requests by frequency](images/chart_features.png)
+![Feature requests by frequency](images/chart-features.png)
 
 Several respondents volunteered feature ideas that align with features already planned for post-validation: calendar integration (2 respondents), occasion tagging, wear history, accessories, and weather integration. This is an encouraging signal — it suggests users see a future with the product, not just a prototype. However, these should be treated as directional signals rather than build mandates. The "Wear this" problem and the photo gap are more urgent because they undermine the current MVP's core jobs.
 

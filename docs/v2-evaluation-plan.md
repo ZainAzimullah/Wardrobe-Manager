@@ -31,7 +31,7 @@ This plan covers:
 - Scenario-based evaluation of AI recommendation quality
 - A small user evaluation of perceived usefulness
 
-See the [V2 PRD](./V2_PRD.md) and [V2 Opportunity Brief](./V2_Opportunity_Brief.md) for the underlying requirements and product hypothesis.
+See the [V2 PRD](./v2-prd.md) and [V2 Opportunity Brief](./v2-opportunity-brief.md) for the underlying requirements and product hypothesis.
 
 ---
 
@@ -675,13 +675,13 @@ The results document should report both individual failures and recurring patter
 Final and meaningful interim results should be documented in:
 
 ```text
-docs/V2_Evaluation_Results.md
+docs/v2-evaluation-results.md
 ```
 
 A lightweight machine-readable results file may also be used:
 
 ```text
-evals/Results.csv
+evals/results.csv
 ```
 
 ### Recommended result fields
