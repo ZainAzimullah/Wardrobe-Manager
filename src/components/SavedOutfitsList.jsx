@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useWardrobe } from '../context/WardrobeContext'
 import { track } from '../utils/analytics'
 import { colourStyle } from '../utils/colours'
+import { formatWornDate } from '../utils/dates'
 
 export default function SavedOutfitsList({ navigate }) {
   const { outfits, clothingItems } = useWardrobe()
@@ -50,7 +51,14 @@ export default function SavedOutfitsList({ navigate }) {
                 }}
                 className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 text-left"
               >
-                <p className="font-semibold text-gray-900 mb-3">{outfit.name}</p>
+                <div className="flex items-start justify-between gap-2 mb-3">
+                  <p className="font-semibold text-gray-900">{outfit.name}</p>
+                  {outfit.lastWornAt && (
+                    <span className="flex-shrink-0 text-xs font-medium text-green-800 bg-green-50 border border-green-100 rounded-full px-2 py-0.5">
+                      ✓ Worn {formatWornDate(outfit.lastWornAt).toLowerCase()}
+                    </span>
+                  )}
+                </div>
                 <div className="flex flex-col gap-2">
                   <ItemRow label="Top" item={top} />
                   <ItemRow label="Bottom" item={bottom} />

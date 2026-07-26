@@ -4,6 +4,7 @@ import {
   saveClothingItems,
   loadOutfits,
   saveOutfits,
+  updateOutfits,
 } from '../utils/storage'
 
 const WardrobeContext = createContext(null)
@@ -25,6 +26,17 @@ export function WardrobeProvider({ children }) {
     setOutfits(loadOutfits())
   }, [])
 
+  // Records the most recent wear only. Any previous lastWornAt is overwritten.
+  // Returns the storage result so the caller can surface a failure.
+  const markOutfitWorn = useCallback((outfitId) => {
+    const wornAt = new Date().toISOString()
+    const result = updateOutfits((current) =>
+      current.map((o) => (o.id === outfitId ? { ...o, lastWornAt: wornAt } : o)),
+    )
+    if (result.ok) setOutfits(loadOutfits())
+    return result
+  }, [])
+
   const getOutfitWithItems = useCallback(
     (outfitId) => {
       const outfit = outfits.find((o) => o.id === outfitId)
@@ -43,7 +55,16 @@ export function WardrobeProvider({ children }) {
 
   return (
     <WardrobeContext.Provider
-      value={{ clothingItems, outfits, tops, bottoms, addClothingItem, addOutfit, getOutfitWithItems }}
+      value={{
+        clothingItems,
+        outfits,
+        tops,
+        bottoms,
+        addClothingItem,
+        addOutfit,
+        markOutfitWorn,
+        getOutfitWithItems,
+      }}
     >
       {children}
     </WardrobeContext.Provider>

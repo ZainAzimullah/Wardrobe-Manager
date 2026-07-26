@@ -2,10 +2,19 @@ import { useState } from 'react'
 import { useWardrobe } from '../context/WardrobeContext'
 import { track } from '../utils/analytics'
 import { colourStyle } from '../utils/colours'
+import { formatWornDate } from '../utils/dates'
+
+const STORAGE_ERRORS = {
+  quota: 'Your device storage is full, so this could not be saved.',
+  unavailable: 'Your browser is blocking storage, so this could not be saved.',
+  unknown: 'Something went wrong and this could not be saved.',
+}
 
 export default function OutfitDetail({ navigate, params }) {
-  const { getOutfitWithItems } = useWardrobe()
-  const [worn, setWorn] = useState(false)
+  const { getOutfitWithItems, markOutfitWorn } = useWardrobe()
+  // Only the transient failure is component state. The worn fact itself always
+  // comes from the persisted record, so the UI cannot claim an unsaved success.
+  const [saveError, setSaveError] = useState(null)
 
   const resolved = getOutfitWithItems(params.outfitId)
   const outfit = resolved
@@ -23,9 +32,19 @@ export default function OutfitDetail({ navigate, params }) {
     )
   }
 
+  const wornAt = outfit.lastWornAt ?? null
+
   function handleWear() {
     track('outfit_worn', { outfitId: outfit.id })
-    setWorn(true)
+
+    const result = markOutfitWorn(outfit.id)
+
+    if (result.ok) {
+      setSaveError(null)
+      track('outfit_worn_confirmed', { outfitId: outfit.id })
+    } else {
+      setSaveError(result.error)
+    }
   }
 
   return (
@@ -47,18 +66,41 @@ export default function OutfitDetail({ navigate, params }) {
         </div>
       </div>
 
-      {worn ? (
-        <div className="w-full bg-green-50 border border-green-100 rounded-xl py-4 text-center">
-          <p className="text-green-700 font-medium">✓ Outfit chosen for today</p>
+      {wornAt && (
+        <div className="w-full bg-green-50 border border-green-100 rounded-xl py-4 px-4 text-center mb-3">
+          <p className="text-green-800 font-medium">✓ Marked as worn</p>
+          <p className="text-green-700 text-sm mt-0.5">
+            Last worn: {formatWornDate(wornAt)}
+          </p>
         </div>
-      ) : (
-        <button
-          onClick={handleWear}
-          className="w-full bg-gray-900 text-white py-4 rounded-xl font-medium text-sm"
-        >
-          Wear this
-        </button>
       )}
+
+      {saveError && (
+        <div
+          role="alert"
+          className="w-full bg-red-50 border border-red-100 rounded-xl py-4 px-4 mb-3"
+        >
+          <p className="text-red-800 font-medium text-sm">
+            Couldn’t save “Wear this”
+          </p>
+          <p className="text-red-700 text-sm mt-0.5 mb-3">
+            {STORAGE_ERRORS[saveError] ?? STORAGE_ERRORS.unknown}
+          </p>
+          <button
+            onClick={handleWear}
+            className="bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium"
+          >
+            Try again
+          </button>
+        </div>
+      )}
+
+      <button
+        onClick={handleWear}
+        className="w-full bg-gray-900 text-white py-4 rounded-xl font-medium text-sm"
+      >
+        {wornAt ? 'Wear this again' : 'Wear this'}
+      </button>
     </div>
   )
 }
