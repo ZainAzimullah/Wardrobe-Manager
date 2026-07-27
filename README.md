@@ -1,4 +1,4 @@
-# Wardrobe Manager
+# AI Wardrobe Manager
 
 A mobile-first web app for reducing outfit decision fatigue — built end-to-end as a PM case study: discovery → definition → build → user testing → findings.
 
