@@ -4,7 +4,9 @@ A mobile-first web app for reducing outfit decision fatigue — built end-to-end
 
 **→ [wardrobe-manager-eight.vercel.app](https://wardrobe-manager-eight.vercel.app/)**
 
-![Prototype Preview](docs/images/prototype-preview.png)
+| MVP | V2 |
+|---|---|
+| ![MVP Preview](docs/images/prototype-preview.png) | ![V2 Preview](docs/images/v2-preview.png) |
 
 ---
 
@@ -136,9 +138,11 @@ The core experience landed as intended:
 
 ## V2 — AI Outfit Recommendations
 
-![V2 Preview — Home screen with the new Suggest an Outfit entry point](docs/images/v2-preview.png)
-
 V2 extends Wardrobe Manager from a tool for manually creating and saving outfits into a context-aware decision-support experience. It has since been built end to end and taken through a full evaluation round.
+
+| Request | Recommendation |
+|---|---|
+| ![Outfit request — occasion, weather and preferences](docs/images/outfit-request-presentation.png) | ![Outfit recommendation — selected items, explanation and save action](docs/images/outfit-recommendation-presentation.png) |
 
 ### From MVP evidence to a new hypothesis
 
@@ -250,6 +254,12 @@ Defining the problem, choosing the right opportunity (decision fatigue + outfit 
 
 **Different tools played distinct roles.**
 Claude Code was strongest for architecture and initial scaffolding. Cursor for iterative refinement. ChatGPT for early problem framing and artefact structure.
+
+**Separating hypothesis from evidence prevented scope creep dressed up as user research.**
+MVP participants asked for photos, not AI. Naming that distinction explicitly in the opportunity brief — and keeping it visible rather than quietly implying otherwise — kept V2 honest about what it was actually testing versus what it was building on faith.
+
+**Evaluation discipline mattered more than prompt tuning.**
+Fixing scenarios, thresholds and a scoring rubric before a single live call meant results could be trusted rather than retrofitted. When one weak result appeared, having committed in advance to two runs per scenario was what let me tell a real defect apart from ordinary model variability — without that discipline I'd have either over-reacted to noise or missed a genuine pattern.
 
 > As execution becomes increasingly commoditised, the quality of problem framing, prioritisation, and judgement becomes the primary driver of product impact.
 
