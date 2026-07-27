@@ -24,13 +24,13 @@ The MVP was intentionally designed to test whether users could understand and co
 
 The MVP was tested with six participants on 12–13 April 2026.
 
-Survey and qualitative feedback were collected from all six participants. Behavioural analytics were available for four participants because two sessions were not captured by Mixpanel.
+Survey and qualitative feedback were collected from all six participants. Behavioural analytics were available for four participants because two sessions were not captured by Mixpanel. The two non-instrumented participants verbally confirmed at debrief that they had completed the full loop; that is self-report, and is kept separate from the instrumented figures below.
 
 The core workflow performed well:
 
 * **4/4 instrumented participants** added at least two clothing items
 * **4/4 instrumented participants** created an outfit
-* **4/4 instrumented participants** completed the measured product funnel
+* **4/4 instrumented participants** completed the measured product funnel; the **2 non-instrumented participants** self-reported completing the same loop, giving **6/6 overall**
 * Average outfit-creation time was **57 seconds**, against a target of under three minutes
 * Participants created **2.5 outfits per Weekly Active User** during the test window
 

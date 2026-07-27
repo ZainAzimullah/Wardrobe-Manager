@@ -106,7 +106,7 @@ Working professionals who own a moderate wardrobe, want to look put-together, an
 
 > **6 participants · 12–13 April 2026 · Mobile web · Auckland**
 
-The core workflow was validated for usability and speed. Every instrumented user completed the full loop without instruction. Average outfit creation time was **57 seconds** against a 3-minute target, with zero funnel drop-off across all four steps.
+The core workflow was validated for usability and speed. Every instrumented user completed the full loop without instruction, and the two participants whose sessions were not captured in analytics self-reported completing it as well. Average outfit creation time was **57 seconds** against a 3-minute target, with zero funnel drop-off across all four steps.
 
 Two issues emerged.
 
@@ -125,7 +125,7 @@ The core experience landed as intended:
 | Metric | Result | Target | Met? |
 |---|---|---|---|
 | Users adding 2+ items | 4/4 (100%) | ≥ 70% | ✓ |
-| Users creating at least one outfit | 4/4 (100%) | ≥ 60% | ✓ |
+| Users completing the core loop | 6/6 (100%) — 4 instrumented, 2 self-reported | ≥ 60% | ✓ |
 | Avg. outfit creation time | 57 seconds | < 3 min | ✓ |
 | Outfits per Weekly Active User | 2.5 | ≥ 2 | ✓ |
 | Users rating helpfulness ≥3/5 | 5/6 (83%) | ≥ 70% vote ≥ 3/5 | ✓ |
