@@ -12,6 +12,8 @@
 // Usage:
 //   node evals/run-evals.mjs --runs 2
 //   node evals/run-evals.mjs --runs 2 --round r01
+//   node evals/run-evals.mjs --runs 2 --scenario s06
+//   node evals/run-evals.mjs --runs 2 --scenarios s02,s06,s08
 
 import { readFileSync, mkdirSync, writeFileSync, existsSync } from 'node:fs'
 import path from 'node:path'
@@ -42,7 +44,8 @@ const HUMAN_SCORE_FIELDS = [
 ]
 
 function parseArgs(argv) {
-  const args = { runs: DEFAULT_RUNS, round: null }
+  const args = { runs: DEFAULT_RUNS, round: null, scenarioIds: null }
+  const requested = new Set()
   for (let i = 0; i < argv.length; i++) {
     const flag = argv[i]
     if (flag === '--runs') {
@@ -62,12 +65,31 @@ function parseArgs(argv) {
         process.exit(1)
       }
       args.round = raw
+    } else if (flag === '--scenario') {
+      const raw = argv[++i]
+      if (!raw) {
+        console.error('--scenario requires a scenario id, e.g. --scenario s06')
+        process.exit(1)
+      }
+      requested.add(raw.trim())
+    } else if (flag === '--scenarios') {
+      const raw = argv[++i]
+      if (!raw) {
+        console.error('--scenarios requires a comma-separated list, e.g. --scenarios s02,s06,s08')
+        process.exit(1)
+      }
+      for (const id of raw.split(',').map((s) => s.trim()).filter(Boolean)) {
+        requested.add(id)
+      }
     } else {
       console.error(`Unknown argument: ${flag}`)
-      console.error('Usage: node evals/run-evals.mjs --runs 2 [--round r01]')
+      console.error(
+        'Usage: node evals/run-evals.mjs --runs 2 [--round r01] [--scenario s06 | --scenarios s02,s06,s08]',
+      )
       process.exit(1)
     }
   }
+  if (requested.size > 0) args.scenarioIds = requested
   return args
 }
 
@@ -226,11 +248,11 @@ async function main() {
     process.exit(1)
   }
 
-  const { runs, round } = parseArgs(process.argv.slice(2))
+  const { runs, round, scenarioIds } = parseArgs(process.argv.slice(2))
   const roundId = round || defaultRoundId()
 
   const fixture = loadJSON('wardrobe-fixture.json')
-  const scenarios = loadJSON('scenarios.json')
+  let scenarios = loadJSON('scenarios.json')
 
   if (!Array.isArray(fixture) || fixture.length === 0) {
     console.error('evals/wardrobe-fixture.json is empty or invalid.')
@@ -239,6 +261,21 @@ async function main() {
   if (!Array.isArray(scenarios) || scenarios.length === 0) {
     console.error('evals/scenarios.json is empty or invalid.')
     process.exit(1)
+  }
+
+  // --scenario/--scenarios only narrows which scenarios run this round — the
+  // fixture, prompt, model configuration, validation and output format below
+  // are identical to a full run.
+  if (scenarioIds) {
+    const knownIds = new Set(scenarios.map((s) => s.id))
+    const unknown = [...scenarioIds].filter((id) => !knownIds.has(id))
+    if (unknown.length > 0) {
+      console.error(
+        `Unknown scenario id(s): ${unknown.join(', ')}. Valid ids: ${[...knownIds].join(', ')}`,
+      )
+      process.exit(1)
+    }
+    scenarios = scenarios.filter((s) => scenarioIds.has(s.id))
   }
 
   const resultsDir = path.join(__dirname, 'results')

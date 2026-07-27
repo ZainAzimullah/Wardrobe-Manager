@@ -257,10 +257,84 @@ No prompt, schema, or validation change is proposed here — this round's eviden
 
 ---
 
-## 12. Prompt and Product Change Log
+## 12. Targeted Confirmation Round — round `confirm-01`
+
+### Purpose and scope
+
+This round exists to check the four items raised in §11 (Next Iteration) against fresh live calls: whether the s06 material inconsistency (Finding 2) recurs, whether s02/s08's combination constraints continue to hold, and whether the scoring inconsistencies noted for s10/s11 and s12 were one-off. It is **not** a second independent baseline and is not treated as one — it re-runs only the six scenarios named above, using the identical fixed configuration as the baseline, so any difference between the two rounds is attributable to model variability, not a configuration change.
+
+**Scenarios and repetitions:** s02, s06, s08, s10, s11, s12 — 2 runs each, 12 rows total.
+**Configuration:** Model `claude-sonnet-5` · Effort `low` · Prompt version `v1` · Schema version `v1` — identical to the baseline round in every recorded field.
+**Source:** `evals/results/confirm-01-scored.csv` (raw counterpart: `confirm-01.json` / `.csv`), verified unmodified from the raw run on every automated column before analysis.
+**Command used:** `node --env-file=.env evals/run-evals.mjs --runs 2 --scenarios s02,s06,s08,s10,s11,s12 --round confirm-01`
+
+### Quantitative results
+
+| Metric | Confirmation round (n=12) |
+|---|---|
+| Automated pass rate | 12/12 = 100% |
+| Invented-ID count | 0 |
+| Hard-constraint adherence | 12/12 = 100% |
+| No-match correctness | 4/4 = 100% |
+| Average latency | 3617.1ms (range 2435–7928ms) |
+| Retries | 0/12 |
+| Occasion suitability | 5.00 (n=8 ok rows) |
+| Weather suitability | 5.00 (n=8) |
+| Outfit coherence | 5.00 (n=8) |
+| Constraint adherence | 5.00 (n=8) |
+| Explanation quality | 5.00 (n=8) |
+| Wardrobe specificity | 5.00 (n=8/8 — no blanks this round) |
+| Failure-category count | 0 (all blank) |
+
+### Comparison with baseline — same six scenarios only
+
+The table below restricts the baseline's own data to exactly these six scenarios (not the full 24-row baseline), so the comparison is scenario-matched rather than a pooled headline figure:
+
+| Metric | Baseline (these 6 scenarios, n=8 ok) | Confirmation (n=8 ok) |
+|---|---|---|
+| Automated pass | 12/12 = 100% | 12/12 = 100% |
+| Hard-constraint adherence | 12/12 = 100% | 12/12 = 100% |
+| No-match correctness | 4/4 = 100% | 4/4 = 100% |
+| Occasion suitability | 5.00 | 5.00 |
+| Weather suitability | 4.75 | 5.00 |
+| Outfit coherence | 5.00 | 5.00 |
+| Constraint adherence | 5.00 | 5.00 |
+| Explanation quality | 4.50 | 5.00 |
+| Wardrobe specificity | 5.00 (n=6/8, s12 blank) | 5.00 (n=8/8) |
+| Avg latency | 3763.7ms | 3617.1ms |
+
+**No configuration changed between these two rounds.** The higher weather-suitability and explanation-quality averages in the confirmation round are therefore **not** claimed as an improvement — per evaluation plan §10, a difference between rounds under an identical configuration is a data point about the model's own variability, not evidence of a fix, since nothing was changed for it to be a fix *of*.
+
+### Did each investigated issue recur?
+
+**s06 material inconsistency (Finding 2) — did not recur.** Baseline run 1 selected `bottom_05` (wool-blend trousers) and mischaracterized it as "lightweight cotton." In this round, both runs instead selected `bottom_02` (Beige chinos — genuinely cotton per its `details` field) and described the material correctly:
+
+> Run 1: "The pale blue casual shirt paired with beige chinos gives a smart-casual office-appropriate look that's lightweight and breathable for warm weather, while avoiding linen and denim as requested."
+>
+> Run 2: "The pale blue casual shirt with beige chinos is smart-casual and appropriate for an office day, made of breathable cotton for warm weather, and avoids both linen and denim as requested."
+
+Important caveat: `bottom_05` (the wool-blend item involved in the original inconsistency) was not selected in either run this round, so this is evidence of *no recurrence in this sample*, not confirmation that the underlying tendency is fixed — the same claim about `bottom_05` specifically was not re-tested.
+
+**s02/s08 combination constraints ("avoid the T-shirt-and-jeans combination") — held.** All 4 generations this round (s02 ×2, s08 ×2) selected `top_01`/`bottom_01` (Oxford shirt + Charcoal wool trousers), never `top_03`/`bottom_03`. This matches the baseline's 4/4. Still not mechanically checked — confirmed by manual inspection of `returnedTopId`/`returnedBottomId`, exactly as flagged as an open methodology gap in the baseline (§8, §11).
+
+**s10/s11 scoring consistency — improved.** All four `no_match` rows this round left every human-score column blank, matching §6's documented methodology exactly. This corrects the baseline's data-quality issue, where all four `no_match` rows were incorrectly scored 5 across every dimension. This is a scoring-methodology observation, not a claim about model behavior — s10/s11's automated results (`no_match`, `noMatchCorrect: true`) were already correct in the baseline; only the accompanying human scores were the problem, and that problem did not recur.
+
+**s12 `wardrobeSpecificity` — scored this time.** Both runs received 5/5, versus both runs left blank in the baseline. This directly answers the open question raised in §11 ("worth asking the scorer whether this was deliberate or an oversight") — it was evidently the latter, since it was scored without issue once flagged.
+
+### Evaluation-methodology limitation discovered
+
+Comparing the two rounds surfaces a limitation in the scoring process itself, separate from the model: **the human-scoring step has not yet been fully consistent round-to-round** — the no-match rows and s12's wardrobe specificity were handled differently between the baseline and this confirmation round, despite §6's instructions being unchanged in between. This doesn't affect any automated metric (those are computed identically and correctly in both rounds), but it means quality-dimension averages should be read as approximate until the CSV's scoring instructions are followed with full consistency across every round — a documentation/UX gap in the results CSV, not a code or model issue, and out of scope to fix here since it isn't a prompt/schema/API/UI change.
+
+### Decision
+
+**No prompt change justified.** The single issue this round was designed to chase — the s06 material inconsistency — did not recur across 2 further live generations, and no other scenario produced a repeated or new failure. Zero automated-check failures, zero invented ids, 100% hard-constraint adherence and 100% no-match correctness held across both rounds without exception. A single historical occurrence that fails to recur on retest is exactly the kind of variability the evaluation plan's two-runs design (§10) exists to distinguish from a genuine defect, and one non-recurrence is not a "specific repeated failure" — it is the absence of one. No broad prompt tuning is proposed, and none of the four items chased in §11 turned up a pattern that would warrant changing the system prompt, schema, or validation.
+
+---
+
+## 13. Prompt and Product Change Log
 
 Mirrors evaluation plan §14. Record only changes that materially affect model context, selection rules, structured output, validation, no-match behaviour, user input, or recommendation display — not wording-only edits.
 
 | Version | Observed problem | Change made | Expected effect | Actual result |
 |---|---|---|---|---|
-| v1 | — | Initial implementation (slice 4 live model integration) | — | Baseline round 2026-07-27T07-41-51-675Z: all 12 thresholds passed (§8–§10). One isolated explanation/material inconsistency observed (s06 run 1, Finding 2) — not yet a confirmed pattern, no change made on the basis of a single occurrence. |
+| v1 | — | Initial implementation (slice 4 live model integration) | — | Baseline round 2026-07-27T07-41-51-675Z: all 12 thresholds passed (§8–§10). One isolated explanation/material inconsistency observed (s06 run 1, Finding 2) — not yet a confirmed pattern, no change made on the basis of a single occurrence. Targeted confirmation round `confirm-01` (§12) re-ran the affected scenarios: the s06 inconsistency did not recur; no other repeated failure found. Decision: no prompt change justified. |
