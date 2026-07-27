@@ -110,7 +110,7 @@ The core workflow was validated for usability and speed. Every instrumented user
 
 Two issues emerged.
 
-**"Wear this" is broken by ambiguity.** Five of six users didn't understand what happened after tapping it. They expected a persistent, visible outcome. Without one, there's no observable loop closure and no reason to return.
+**"Wear this" is broken by ambiguity.** Five of six users didn't understand what happened after tapping it. They expected a persistent, visible outcome. Without one, there was no observable loop closure and little reason to return to that outfit later.
 
 > *"After clicking 'Wear this' I tried a few more times, and went back to the main page. Didn't end up figuring out what to do next or what this action means."*
 
@@ -140,7 +140,7 @@ The mean helpfulness score was 3.0/5. Usable, but only moderately helpful.
 
 ## V2 — AI Outfit Recommendations
 
-V2 takes Wardrobe Manager from a tool for manually creating and saving outfits to one that helps the user actually decide. It's now built end to end and has been through a full evaluation round.
+V2 takes Wardrobe Manager from a tool for manually creating and saving outfits to one that helps the user actually decide. It's now built end-to-end and has been through a baseline evaluation and targeted confirmation round.
 
 | Request | Recommendation |
 |---|---|
@@ -214,7 +214,7 @@ One weakness turned up. In a single row out of 24, an explanation described a wo
 
 A second, smaller round re-ran 6 of the 12 scenarios, twice each, for 12 rows. It targeted the scenario behind that weakness plus the two hard constraints that need checking by hand. Model, prompt version and schema version were identical to the baseline. Nothing was changed between the two rounds.
 
-The material-inconsistency issue did not recur across two further live generations, and no other scenario produced a new or repeated failure. The numbers matched the baseline exactly: 12/12 automated pass, 0 invented ids, 100% hard-constraint adherence, 100% no-match correctness.
+The material-inconsistency issue did not recur across two further live generations, and no other scenario produced a new or repeated failure. The numbers matched the baseline exactly: 12/12 automated pass, 0 invented IDs, 100% hard-constraint adherence, 100% no-match correctness.
 
 ### Why the prompt was not changed
 
@@ -228,7 +228,7 @@ One occurrence that doesn’t recur on retest isn’t a repeated failure. It’s
 - **The endpoint has no rate limiting.** An accepted, documented tradeoff for a public, unauthenticated prototype.
 - **Storage is still single-device `localStorage`**, unchanged from the MVP.
 
-> The next step which I haven't done yet is to carry out a small usability study.
+> **Next step:** run the small usability study defined in the evaluation plan to test whether recommendations improve real-user helpfulness and reduce perceived decision effort.
 
 ### V2 documentation
 
@@ -254,7 +254,7 @@ Defining the problem, choosing the right opportunity (decision fatigue + outfit 
 Claude Code was strongest for architecture and initial scaffolding. Cursor for iterative refinement. ChatGPT for early problem framing and artefact structure.
 
 **Separating hypothesis from evidence prevented scope creep dressed up as user research.**
-MVP participants asked for photos. They didn't ask for AI. Writing that distinction into the opportunity brief, and keeping it visible instead of quietly glossing over it, kept V2 honest about which parts were tested and which were still assumption.
+MVP participants asked for photos. They didn't ask for AI. Writing that distinction into the opportunity brief, and keeping it visible instead of quietly glossing over it, kept V2 honest about which parts were tested and which were still assumptions.
 
 **Evaluation discipline mattered more than prompt tuning.**
 Fixing scenarios, thresholds and a scoring rubric before a single live call meant I could trust the results instead of retrofitting them. When one weak result appeared, having already committed to two runs per scenario is what let me tell a real defect from ordinary model variability. Without that, I'd probably have over-reacted to noise.
