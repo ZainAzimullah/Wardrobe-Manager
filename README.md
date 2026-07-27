@@ -304,8 +304,8 @@ Fixing scenarios, thresholds and a scoring rubric before a single live call mean
 ### Setup
 
 ```bash
-git clone https://github.com/zainazimullah/wardrobe-manager.git
-cd wardrobe-manager
+git clone https://github.com/ZainAzimullah/AI-Wardrobe-Manager.git
+cd AI-Wardrobe-Manager
 npm install
 cp .env.example .env   # add your Mixpanel token and Anthropic API key
 ```
