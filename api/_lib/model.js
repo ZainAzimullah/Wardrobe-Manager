@@ -7,7 +7,9 @@ import { classifyProviderError } from './validateResponse.js'
 // module in the application that imports the Anthropic SDK or touches the
 // network — everything else in api/_lib is plain, SDK-free ESM.
 export const MODEL_ID = 'claude-sonnet-5'
-const EFFORT = 'low'
+// Exported so the evaluation runner stamps results with the actual runtime
+// value rather than a duplicated literal that could drift from it.
+export const EFFORT = 'low'
 const MAX_TOKENS = 2000
 // Below the function's 30s maxDuration (vercel.json) so a timeout surfaces
 // as a recoverable client state rather than a platform 504.

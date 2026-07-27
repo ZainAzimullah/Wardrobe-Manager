@@ -14,6 +14,15 @@ export default function HomeScreen({ navigate }) {
   }, [isEmpty])
 
   async function handleLoadFixture() {
+    if (clothingItems.length > 0) {
+      const confirmed = window.confirm(
+        `This replaces your current wardrobe (${clothingItems.length} item${
+          clothingItems.length === 1 ? '' : 's'
+        }) with the fixed evaluation fixture. This cannot be undone. Continue?`,
+      )
+      if (!confirmed) return
+    }
+
     const result = await loadEvaluationWardrobe()
     if (result.ok) {
       // The context reads from localStorage on mount, so a reload is the

@@ -62,6 +62,14 @@ export default async function handler(req, res) {
     return
   }
 
-  // status is 'ok' or 'no_match' — both are a successful application outcome.
-  res.status(200).json(result)
+  // Built explicitly rather than forwarding `result` wholesale: getRecommendation
+  // also returns an internal `attempts` count (for the evaluation runner) that
+  // is not part of the documented three-shape client contract (technical plan
+  // §5.3) and must never reach the client.
+  if (result.status === 'no_match') {
+    res.status(200).json({ status: 'no_match', unmetRequirement: result.unmetRequirement })
+    return
+  }
+
+  res.status(200).json({ status: 'ok', topId: result.topId, bottomId: result.bottomId, explanation: result.explanation })
 }
