@@ -1,6 +1,6 @@
 # AI Wardrobe Manager
 
-A mobile-first web app for reducing outfit decision fatigue — built end-to-end as a PM case study: discovery → definition → build → user testing → findings.
+A mobile-first web app for reducing outfit decision fatigue — built end-to-end as a PM case study across two iterations: discovery → definition → build → user testing → findings → a second, evaluated iteration (V2).
 
 **→ [wardrobe-manager-eight.vercel.app](https://wardrobe-manager-eight.vercel.app/)**
 
@@ -68,6 +68,8 @@ Working professionals who own a moderate wardrobe, want to look put-together, an
 
 ## MVP Scope
 
+*This describes the original MVP as tested. Photo uploads and AI recommendations, listed below as excluded, were later built and evaluated in V2 — see [V2 — AI Outfit Recommendations](#v2--ai-outfit-recommendations).*
+
 **In scope**
 - Add clothing items (name, type, colour)
 - View wardrobe grouped by type
@@ -134,43 +136,91 @@ The core experience landed as intended:
 
 ## V2 — AI Outfit Recommendations
 
-V2 extends Wardrobe Manager from a tool for manually creating and saving outfits into a context-aware decision-support experience.
+![V2 Preview — Home screen with the new Suggest an Outfit entry point](docs/images/v2-preview.png)
 
-The iteration responds to two findings from MVP testing:
+V2 extends Wardrobe Manager from a tool for manually creating and saving outfits into a context-aware decision-support experience. It has since been built end to end and taken through a full evaluation round.
 
-- Five of six participants were unclear about what happened after selecting **“Wear this”**
-- Four of six participants independently requested clothing photos to make garments easier to recognise
+### From MVP evidence to a new hypothesis
 
-V2 addresses those evidenced gaps while testing a new hypothesis:
+The MVP evidence above supports two things directly: the **“Wear this”** interaction needed a clearer, persistent outcome (5 of 6 participants were unclear what it did), and clothing photos would make garments easier to recognise (4 of 6 raised this unprompted). **No MVP participant asked for AI outfit recommendations.** That third idea — that a context-aware recommendation grounded in the wardrobe could reduce decision effort — was a hypothesis inferred from the gap between “users completed the workflow” and “users rated it only 3.0/5 helpful,” not a feature MVP testers requested:
 
-> Can a context-aware recommendation grounded in the user’s saved wardrobe reduce the effort required to decide what to wear?
+> “It was not directly expressed by participants as a request for AI.” — [V2 Opportunity Brief](docs/v2-opportunity-brief.md)
 
-### What has been built
+> “We believe that providing a context-aware outfit recommendation grounded in the user’s saved wardrobe will reduce the effort required to decide what to wear.” — [V2 Opportunity Brief](docs/v2-opportunity-brief.md)
 
-- A persistent **“Wear this”** state with visible confirmation and last-worn date
-- Direct clothing photo selection, client-side resizing and local storage
-- Optional garment details such as material, warmth and formality
-- An AI recommendation flow using occasion, optional weather and user preferences
-- Structured model output containing one saved top ID and one saved bottom ID
-- Server-side and client-side validation to prevent unavailable garments from being displayed
-- An explicit no-match state when the wardrobe cannot satisfy the request
-- A secure Vercel serverless endpoint so the Anthropic API key is never exposed in the browser
+This was treated as a hypothesis to test, not a decision to build around — the [V2 PRD](docs/v2-prd.md) is explicit that “AI outfit assistance was not directly validated by the MVP research.”
 
-The model receives structured wardrobe metadata rather than garment photos. Photos help the user recognise their clothing, while excluding images from the model keeps the initial experiment narrower, cheaper and easier to evaluate.
+### What was built
 
-### Current status
+- A persistent **“Wear this”** state with immediate confirmation and a visible last-worn date — closes the MVP’s ambiguity gap directly
+- Direct clothing photo selection, client-side downscaling (≤512px, JPEG quality 0.7) and local storage — closes the MVP’s recognisability gap
+- An optional `details` field for material, warmth, formality and shade, since the product’s fixed colour palette can’t express those alone
+- An AI recommendation flow: occasion (six suggested chips + free text), optional weather, optional preferences
+- One Vercel serverless endpoint (`/api/recommend`) that calls Claude Sonnet, validates the response, and returns one of three sanitised outcomes — success, honest no-match, or a typed error
+- A **“Save this outfit”** action that hands a validated recommendation straight to the existing outfit-save flow — no second save implementation
+- Six analytics events tracking the recommendation funnel, from `recommendation_viewed` through `recommendation_saved`
+- A repeatable evaluation harness (`evals/run-evals.mjs`) that runs the exact production code path against a fixed 10-item test wardrobe and 12 predefined scenarios
 
-The live recommendation flow is working end to end using Claude Sonnet.
+### Architecture
 
-The feature has **not yet completed formal evaluation or user testing**, so recommendation quality and improvements in perceived helpfulness remain unproven.
+```
+Browser  → client-side projection (photo, createdAt stripped before sending)
+         → /api/recommend  (server re-validates + re-projects the wardrobe)
+         → Claude Sonnet   (JSON-schema-constrained structured output)
+         → server validation (schema, wardrobe-identifier, category — one retry on failure only)
+         → sanitised { status, ... } response — never the raw model payload
+         → client re-validation against the live wardrobe, before anything renders
+         → render (names, colours, photos always come from local records, never model text)
+```
 
-The next steps are to:
+Full request/response contracts, retry policy and error-code mapping: [V2 Technical Plan](docs/v2-technical-plan.md).
 
-1. Connect recommendations to the existing save-outfit flow
-2. Add the planned analytics events
-3. Run the predefined scenario-based evaluation
-4. Conduct a small user evaluation
-5. Document results and any resulting iterations
+### Key decisions
+
+- **Garment photos are never sent to the model.** Only structured text — name, type, colour and the optional `details` field — leaves the browser. Photos exist so the *user* can recognise their clothing; the model never sees them.
+- **Validation happens twice, independently.** The server validates the raw model response’s shape, checks every returned identifier against the wardrobe *as sent in that request*, and confirms category correctness — with exactly one controlled retry, fired only when a response was received but failed validation (never for bad requests, timeouts, or provider/config failures). The client then independently re-resolves both identifiers against the *current* wardrobe before rendering anything, so a stale or tampered response still can’t reach the screen.
+- **The API key never reaches the browser.** It’s read server-side only, from an environment variable with no `VITE_` prefix — Vite only inlines `VITE_`-prefixed variables into the client bundle, so this is a property of the build tool, not a convention someone has to remember.
+- **No rate limiting**, by deliberate decision — input, body-size and timeout limits bound the cost of any single request; total spend under deliberate abuse of the public endpoint is an accepted, documented limitation rather than a solved problem.
+
+### Evaluation methodology and results
+
+12 scenarios, each run twice — 24 total generations against the fixed test wardrobe, using the same production modules the live endpoint calls (`validateRequest` → `getRecommendation` → `validateResponse`), never a mocked response. Two scenarios are deliberately impossible for this wardrobe (an all-black outfit, black-tie formalwear), and one is a direct prompt-injection attempt. Full method and scoring rubric: [V2 Evaluation Plan](docs/v2-evaluation-plan.md).
+
+| Metric | Result | Threshold |
+|---|---|---|
+| Automated pass rate | 24/24 (100%) | — |
+| Invented-garment count | 0 | 0 |
+| Hard-constraint adherence | 24/24 (100%) | ≥ 80% |
+| No-match correctness | 4/4 (100%) | 100% |
+| Occasion suitability | 5.00/5 | ≥ 4.0 |
+| Outfit coherence | 5.00/5 | ≥ 4.0 |
+| Weather suitability | 4.90/5 | ≥ 4.0 |
+| Explanation quality | 4.50/5 | ≥ 4.0 |
+| Wardrobe specificity | 5.00/5 (18 of 20 rows scored) | ≥ 4.0 |
+
+All 12 pre-defined thresholds passed. Average latency was 3.78s, well inside the ~10s target. The prompt-injection scenario was resisted in both runs, with the model naming its own refusal directly in the explanation:
+
+> “I can only recommend from your wardrobe, not a red jacket or boots.” — model output, prompt-injection scenario, run 2
+
+The one weakness found — an explanation misdescribing a wool-blend garment as “lightweight cotton” in one of the 24 rows — did not cause a hard-constraint or automated-check failure. Full per-scenario results and quoted evidence: [V2 Evaluation Results](docs/v2-evaluation-results.md).
+
+### Targeted confirmation round
+
+A second, smaller round (6 of the 12 scenarios, run twice each — 12 rows) specifically re-ran the scenarios behind the one flagged weakness and the two hard constraints that require manual rather than mechanical checking. Model, prompt version and schema version were identical to the baseline — nothing was changed between the two rounds.
+
+The material-inconsistency issue did not recur across two further live generations, and no other scenario produced a new or repeated failure: 12/12 automated pass, 0 invented ids, 100% hard-constraint adherence, 100% no-match correctness — matching the baseline exactly.
+
+### Why the prompt was not changed
+
+A single occurrence that fails to recur on retest is not a repeated failure — it is the run-to-run variability the evaluation plan’s two-runs-per-scenario design exists to distinguish from an actual defect (the model exposes no sampling controls, so identical configuration can legitimately produce different valid outputs). No prompt, schema or validation change was made as a result of this evaluation round, and none is proposed until a genuine repeated pattern appears.
+
+### Known limitations
+
+- **Real user value is unproven.** This evaluation measures technical grounding and rubric-scored quality, not whether real users find the recommendation more useful than the manual outfit builder — that requires the separate small user evaluation the evaluation plan defines, which has not yet been run.
+- **Two hard constraints (scenarios s02, s08) are not mechanically checked.** They exclude a *combination* of two garments, not a single item, which the current constraint-checking mechanism can’t express without over-forbidding either item outright — verified by manual review instead.
+- **The evaluation sample is small and directional** (2 runs × 12 scenarios), not statistically conclusive.
+- **The endpoint has no rate limiting** — an accepted, documented tradeoff for a public, unauthenticated prototype.
+- **Storage is still single-device `localStorage`**, unchanged from the MVP.
 
 ### V2 documentation
 
@@ -178,8 +228,9 @@ The next steps are to:
 |---|---|
 | [Opportunity Brief](docs/v2-opportunity-brief.md) | Evidence, opportunity, assumptions and product hypothesis |
 | [Product Requirements Document](docs/v2-prd.md) | Scope, requirements, guardrails and success criteria |
-| [Evaluation Plan](docs/v2-evaluation-plan.md) | Test wardrobe, scenarios, hard checks and scoring rubric |
 | [Technical Plan](docs/v2-technical-plan.md) | Architecture, API contract, validation and implementation slices |
+| [Evaluation Plan](docs/v2-evaluation-plan.md) | Test wardrobe, scenarios, hard checks and scoring rubric |
+| [Evaluation Results](docs/v2-evaluation-results.md) | Baseline and targeted-confirmation results, findings and decision |
 
 ---
 
@@ -206,15 +257,15 @@ Claude Code was strongest for architecture and initial scaffolding. Cursor for i
 
 ## Future Improvements
 
-- "Wear this" confirmation state (immediate)
-- Photo uploads for clothing items
+“Wear this” confirmation and photo uploads shipped in V2 (see above). Remaining ideas, not yet built:
+
 - Edit and delete items
 - Multi-item outfits (jackets, shoes, accessories)
 - Outfit tagging (work, casual, formal)
-- Weather-based suggestions
+- Automatic weather-based suggestions (V2 added manual weather entry; automatic retrieval remains future work)
 - Calendar integration
-- AI recommendations
 - User accounts and cloud sync
+- The small user evaluation of recommendation helpfulness (evaluation plan §17 — not yet run)
 
 ---
 
@@ -226,6 +277,8 @@ Claude Code was strongest for architecture and initial scaffolding. Cursor for i
 | Styling | Tailwind CSS |
 | State | React useState + useContext |
 | Storage | Browser localStorage |
+| AI | Claude Sonnet via `@anthropic-ai/sdk`, one Vercel serverless function |
+| Testing | Vitest — pure validation/orchestration modules, no network or API key required |
 | Hosting | Vercel |
 | Analytics | Mixpanel |
 
@@ -270,3 +323,17 @@ npx vercel dev --listen 3000   # http://localhost:3000
 | `npm run build` | Build for production → `dist/` |
 | `npm run preview` | Serve the production build locally |
 | `npm test` | Run the Vitest suite (`api/_lib/**` validation and error-mapping tests) |
+
+### Running the evaluation
+
+Requires a real `ANTHROPIC_API_KEY` and makes real, billed calls to Claude — never invoked by `npm test`.
+
+```bash
+# Full 12-scenario, 2-run evaluation (the documented final round)
+node --env-file=.env evals/run-evals.mjs --runs 2
+
+# Targeted re-run of specific scenarios only
+node --env-file=.env evals/run-evals.mjs --runs 2 --scenarios s02,s06,s08
+```
+
+Writes timestamped JSON and CSV files to `evals/results/`, never overwriting an earlier round. See [V2 Evaluation Results](docs/v2-evaluation-results.md) for how to score and interpret them.
