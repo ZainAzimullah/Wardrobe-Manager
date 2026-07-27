@@ -228,6 +228,8 @@ One occurrence that doesn’t recur on retest isn’t a repeated failure. It’s
 - **The endpoint has no rate limiting.** An accepted, documented tradeoff for a public, unauthenticated prototype.
 - **Storage is still single-device `localStorage`**, unchanged from the MVP.
 
+> The next step which I haven't done yet is to carry out a small usability study.
+
 ### V2 documentation
 
 | Document | Description |
