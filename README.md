@@ -79,7 +79,7 @@ Working professionals who own a moderate wardrobe, want to look put-together, an
 - Save and reuse outfits
 
 **Intentionally excluded**
-- Photo uploads-
+- Photo uploads
 - AI recommendations
 - Weather suggestions
 - User accounts
@@ -106,7 +106,7 @@ Working professionals who own a moderate wardrobe, want to look put-together, an
 
 > **6 participants · 12–13 April 2026 · Mobile web · Auckland**
 
-The core hypothesis was validated. Every instrumented user completed the full loop without instruction. Average outfit creation time was **57 seconds** against a 3-minute target, with zero funnel drop-off across all four steps.
+TThe core workflow was validated for usability and speed.  Every instrumented user completed the full loop without instruction. Average outfit creation time was **57 seconds** against a 3-minute target, with zero funnel drop-off across all four steps.
 
 Two issues emerged.
 
@@ -128,9 +128,11 @@ The core experience landed as intended:
 | Users creating at least one outfit | 4/4 (100%) | ≥ 60% | ✓ |
 | Avg. outfit creation time | 57 seconds | < 3 min | ✓ |
 | Outfits per Weekly Active User | 2.5 | ≥ 2 | ✓ |
-| Avg. helpfulness (Likert) | 3.0 / 5 | ≥ 70% vote ≥ 3/5 | ✓ |
+| Users rating helpfulness ≥3/5 | 5/6 (83%) | ≥ 70% vote ≥ 3/5 | ✓ |
 
-**Next steps:** fix "Wear this" confirmation state immediately. Ship photo upload in v2. The core loop is proven — the path to a 4+ helpfulness score runs through these two fixes.
+The mean helpfulness score was 3.0/5, indicating that the experience was usable but only moderately helpful.
+
+**Next steps:** fix the “Wear this” confirmation state and add direct photo upload. These were the clearest evidence-backed opportunities to improve usefulness before testing any broader decision-support hypothesis.
 
 *Full report: [`/docs/findings-and-recommendations.md`](docs/findings-and-recommendations.md)*
 
@@ -240,14 +242,8 @@ A single occurrence that fails to recur on retest is not a repeated failure — 
 
 ## Reflection & Key Learnings
 
-**Speed of execution changed how I approached scoping.**
-Because I could go from idea to working app quickly, I was more disciplined about what to include. Rather than exploring multiple directions, I focused on validating one hypothesis end to end.
-
 **Upfront structure directly impacted build quality.**
 Providing Claude Code with a PRD, user stories, screen structure, and schema made a measurable difference. Specific inputs produced aligned output. Vague inputs produced features that didn't fit the MVP.
-
-**I chose to validate with a real product, not a prototype.**
-Building with localStorage and a simple UI was as fast as high-fidelity prototyping, and produced more realistic signal. The core risk was behavioural — would users create and reuse outfits — not visual fidelity.
 
 **AI accelerated the build, but not the thinking.**
 Defining the problem, choosing the right opportunity (decision fatigue + outfit reuse), and aligning on a clear north star still required judgement. AI handled execution; direction required a human.
