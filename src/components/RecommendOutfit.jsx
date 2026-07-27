@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useWardrobe } from '../context/WardrobeContext'
+import { track } from '../utils/analytics'
 import ItemThumb from './ItemThumb'
 import { requestRecommendation } from '../utils/recommend'
 
@@ -73,8 +74,19 @@ export default function RecommendOutfit({ navigate }) {
   const wardrobeReady = hasTops && hasBottoms
   const canSubmit = occasion.trim().length > 0 && phase !== 'loading'
 
+  useEffect(() => {
+    track('recommendation_viewed')
+  }, [])
+
   async function handleSubmit() {
     if (!canSubmit) return
+
+    // Fires once per valid submitted request, immediately before it is sent.
+    // Booleans only — never the free text itself.
+    track('recommendation_requested', {
+      hasWeather: !!weather.trim(),
+      hasPreferences: !!preferences.trim(),
+    })
 
     setPhase('loading')
     setResult(null)
@@ -92,12 +104,14 @@ export default function RecommendOutfit({ navigate }) {
     if (response.status === 'no_match') {
       setResult(response)
       setPhase('no_match')
+      track('recommendation_no_match')
       return
     }
 
     if (response.status === 'error') {
       setErrorCode(response.code)
       setPhase('error')
+      track('recommendation_failed', { code: response.code })
       return
     }
 
@@ -110,11 +124,18 @@ export default function RecommendOutfit({ navigate }) {
     if (!top || top.type !== 'top' || !bottom || bottom.type !== 'bottom') {
       setErrorCode('invalid_response')
       setPhase('error')
+      // The second validation gate (local re-resolution) failing is still a
+      // failure, mapped to the same code the server would use for the same
+      // shape of problem.
+      track('recommendation_failed', { code: 'invalid_response' })
       return
     }
 
     setResult({ top, bottom, explanation: response.explanation })
     setPhase('success')
+    // Both validation gates passed: server-side validateResponse (implicit in
+    // status === 'ok') and the local re-resolution just above.
+    track('recommendation_succeeded')
   }
 
   function handleStartOver() {
@@ -223,7 +244,7 @@ export default function RecommendOutfit({ navigate }) {
           </div>
         </>
       ) : phase === 'success' ? (
-        <SuccessResult result={result} onStartOver={handleStartOver} />
+        <SuccessResult result={result} onStartOver={handleStartOver} navigate={navigate} />
       ) : phase === 'no_match' ? (
         <NoMatchResult result={result} onStartOver={handleStartOver} />
       ) : (
@@ -258,7 +279,18 @@ function InsufficientWardrobe({ hasTops, hasBottoms, navigate }) {
   )
 }
 
-function SuccessResult({ result, onStartOver }) {
+function SuccessResult({ result, onStartOver, navigate }) {
+  function handleSave() {
+    // Real local wardrobe records only — result.top/result.bottom were
+    // already re-resolved against WardrobeContext before this state was
+    // reached (RD-3), never trusted from the model's own text.
+    navigate('create-outfit', {
+      selectedTop: result.top,
+      selectedBottom: result.bottom,
+      fromRecommendation: true,
+    })
+  }
+
   return (
     <>
       <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-4">
@@ -275,8 +307,15 @@ function SuccessResult({ result, onStartOver }) {
       </div>
 
       <button
+        onClick={handleSave}
+        className="w-full bg-gray-900 text-white py-4 rounded-xl font-medium text-sm mb-3"
+      >
+        Save this outfit
+      </button>
+
+      <button
         onClick={onStartOver}
-        className="w-full bg-gray-900 text-white py-4 rounded-xl font-medium text-sm"
+        className="w-full border border-gray-200 text-gray-700 py-4 rounded-xl font-medium text-sm"
       >
         Try another
       </button>

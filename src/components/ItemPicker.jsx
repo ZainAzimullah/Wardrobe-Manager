@@ -5,7 +5,7 @@ import ItemThumb from './ItemThumb'
 
 export default function ItemPicker({ navigate, params }) {
   const { tops, bottoms } = useWardrobe()
-  const { type, selectedTop, selectedBottom } = params
+  const { type, selectedTop, selectedBottom, fromRecommendation } = params
   const isTops = type === 'top'
   const items = isTops ? tops : bottoms
   const currentSelected = isTops ? selectedTop : selectedBottom
@@ -18,14 +18,14 @@ export default function ItemPicker({ navigate, params }) {
 
   function handleSelect(item) {
     if (isTops) {
-      navigate('create-outfit', { selectedTop: item, selectedBottom })
+      navigate('create-outfit', { selectedTop: item, selectedBottom, fromRecommendation })
     } else {
-      navigate('create-outfit', { selectedTop, selectedBottom: item })
+      navigate('create-outfit', { selectedTop, selectedBottom: item, fromRecommendation })
     }
   }
 
   function handleDismiss() {
-    navigate('create-outfit', { selectedTop, selectedBottom })
+    navigate('create-outfit', { selectedTop, selectedBottom, fromRecommendation })
   }
 
   return (

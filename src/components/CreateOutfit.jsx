@@ -1,21 +1,35 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useWardrobe } from '../context/WardrobeContext'
 import { track } from '../utils/analytics'
 import { generateId } from '../utils/ids'
 import { colourStyle } from '../utils/colours'
+
+const STORAGE_ERRORS = {
+  quota: 'Your device storage is full, so this could not be saved.',
+  unavailable: 'Your browser is blocking storage, so this could not be saved.',
+  unknown: 'Something went wrong and this could not be saved.',
+}
 
 export default function CreateOutfit({ navigate, params }) {
   const { tops, bottoms, outfits, addOutfit } = useWardrobe()
   const [name, setName] = useState('')
   const [selectedTop, setSelectedTop] = useState(params.selectedTop || null)
   const [selectedBottom, setSelectedBottom] = useState(params.selectedBottom || null)
+  const [isSaving, setIsSaving] = useState(false)
+  const [saveError, setSaveError] = useState(null)
+  // Synchronous re-entrancy guard: setIsSaving only disables the button after
+  // a re-render, which isn't fast enough to stop a rapid double click.
+  const savingRef = useRef(false)
 
   const hasTops = tops.length > 0
   const hasBottoms = bottoms.length > 0
-  const canSave = selectedTop && selectedBottom
+  const canSave = selectedTop && selectedBottom && !isSaving
 
   function handleSave() {
-    if (!canSave) return
+    if (!canSave || savingRef.current) return
+    savingRef.current = true
+    setIsSaving(true)
+    setSaveError(null)
 
     const outfitName = name.trim() || `Outfit ${outfits.length + 1}`
     const outfit = {
@@ -26,8 +40,21 @@ export default function CreateOutfit({ navigate, params }) {
       createdAt: new Date().toISOString(),
     }
 
-    addOutfit(outfit)
+    const result = addOutfit(outfit)
+
+    if (!result.ok) {
+      savingRef.current = false
+      setIsSaving(false)
+      setSaveError(result.error)
+      return
+    }
+
+    // outfit_created reflects a real save, not just a tap — mirrors the
+    // outfit_worn_confirmed pattern in OutfitDetail.jsx.
     track('outfit_created', { hasCustomName: !!name.trim() })
+    if (params.fromRecommendation) {
+      track('recommendation_saved')
+    }
     navigate('outfit-detail', { outfitId: outfit.id })
   }
 
@@ -80,7 +107,14 @@ export default function CreateOutfit({ navigate, params }) {
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1.5">Top</label>
           <button
-            onClick={() => navigate('item-picker', { type: 'top', selectedTop, selectedBottom })}
+            onClick={() =>
+              navigate('item-picker', {
+                type: 'top',
+                selectedTop,
+                selectedBottom,
+                fromRecommendation: params.fromRecommendation,
+              })
+            }
             disabled={!hasTops}
             className={`w-full border rounded-xl p-4 text-left transition-colors ${
               selectedTop ? 'border-gray-900 bg-gray-50' : 'border-gray-200 bg-white'
@@ -104,7 +138,14 @@ export default function CreateOutfit({ navigate, params }) {
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1.5">Bottom</label>
           <button
-            onClick={() => navigate('item-picker', { type: 'bottom', selectedTop, selectedBottom })}
+            onClick={() =>
+              navigate('item-picker', {
+                type: 'bottom',
+                selectedTop,
+                selectedBottom,
+                fromRecommendation: params.fromRecommendation,
+              })
+            }
             disabled={!hasBottoms}
             className={`w-full border rounded-xl p-4 text-left transition-colors ${
               selectedBottom ? 'border-gray-900 bg-gray-50' : 'border-gray-200 bg-white'
@@ -126,13 +167,22 @@ export default function CreateOutfit({ navigate, params }) {
         </div>
       </div>
 
+      {saveError && (
+        <div role="alert" className="bg-red-50 border border-red-100 rounded-xl p-4 mt-6">
+          <p className="text-red-800 font-medium text-sm mb-1">Couldn’t save this outfit</p>
+          <p className="text-red-700 text-sm">
+            {STORAGE_ERRORS[saveError] ?? STORAGE_ERRORS.unknown}
+          </p>
+        </div>
+      )}
+
       <div className="mt-8">
         <button
           onClick={handleSave}
           disabled={!canSave}
           className="w-full bg-gray-900 text-white py-4 rounded-xl font-medium text-sm disabled:opacity-40 disabled:cursor-not-allowed"
         >
-          Save Outfit
+          {isSaving ? 'Saving…' : 'Save Outfit'}
         </button>
       </div>
     </div>

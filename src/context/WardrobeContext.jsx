@@ -22,11 +22,14 @@ export function WardrobeProvider({ children }) {
     return result
   }, [])
 
+  // Returns the storage result so the caller can tell a genuine save from a
+  // full or unavailable store, rather than treating every call as successful.
   const addOutfit = useCallback((outfit) => {
     const raw = JSON.parse(localStorage.getItem('wardrobe_outfits') || '[]')
     const updated = [...raw, outfit]
-    saveOutfits(updated)
-    setOutfits(loadOutfits())
+    const result = saveOutfits(updated)
+    if (result.ok) setOutfits(loadOutfits())
+    return result
   }, [])
 
   // Records the most recent wear only. Any previous lastWornAt is overwritten.
